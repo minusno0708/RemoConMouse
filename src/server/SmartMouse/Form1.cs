@@ -14,7 +14,19 @@ namespace SmartMouse
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Controller.Mouse.Move(100, 0);
+            int inputX, inputY;
+
+            try
+            {
+                inputX = int.Parse(textBox1.Text);
+                inputY = int.Parse(textBox2.Text);
+            }
+            catch
+            {
+                inputX = 0;
+                inputY = 0;
+            }
+            Controller.Mouse.Move(inputX, inputY);
         }
     }
 }
