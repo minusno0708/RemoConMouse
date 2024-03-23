@@ -12,8 +12,6 @@ namespace SmartMouse
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new Form1());
-
-            Controller.Mouse.Move(100, 200);
         }
     }
 }
