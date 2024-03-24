@@ -1,6 +1,7 @@
 package com.example.smartmouse
 
 import android.os.Bundle
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -15,5 +16,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        binding.valueX.text = "100"
+        binding.valueY.text = "200"
+        binding.valueZ.text = "300"
     }
 }
