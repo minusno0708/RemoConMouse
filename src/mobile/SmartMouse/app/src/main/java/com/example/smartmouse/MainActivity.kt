@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.smartmouse.databinding.ActivityMainBinding
+import com.example.smartmouse.SensorInterface
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -17,8 +18,10 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        binding.valueX.text = "100"
-        binding.valueY.text = "200"
-        binding.valueZ.text = "300"
+        val sensor = SensorInterface().testFun()
+
+        binding.valueX.text = sensor.x.toString()
+        binding.valueY.text = sensor.y.toString()
+        binding.valueZ.text = sensor.z.toString()
     }
 }
