@@ -6,7 +6,7 @@ import android.hardware.SensorEvent
 class Coordinate(var x: Float, var y: Float, var z: Float) {}
 
 class SensorInterface {
-    fun onGyroSensorChanged(event: SensorEvent): Coordinate {
+    fun onGyroscopeChanged(event: SensorEvent): Coordinate {
         val coo = Coordinate(0f, 0f, 0f)
 
         if (event.sensor.type === Sensor.TYPE_GYROSCOPE) {
