@@ -2,23 +2,34 @@ package com.example.smartmouse
 
 import android.hardware.Sensor
 import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 
-class Coordinate(var x: Float, var y: Float, var z: Float) {}
+class GyroscopeManager(private val sensorManager: SensorManager, private val listener: GyroscopeListener): SensorEventListener {
+    private var gyroscopeSensor: Sensor? = null
 
-class SensorInterface {
-    fun onGyroscopeChanged(event: SensorEvent): Coordinate {
-        val coo = Coordinate(0f, 0f, 0f)
-
-        if (event.sensor.type === Sensor.TYPE_GYROSCOPE) {
-            coo.x = event.values[0]
-            coo.y = event.values[1]
-            coo.z = event.values[2]
-        }
-
-        return coo
+    init {
+        gyroscopeSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
     }
 
-    fun testFun(): Coordinate {
-        return Coordinate(0f, 0f, 0f)
+    interface GyroscopeListener {
+        fun onValueChanged(x: Float, y: Float, z: Float)
+    }
+
+    fun registerListener() {
+        sensorManager.registerListener(this, gyroscopeSensor, SensorManager.SENSOR_DELAY_UI)
+    }
+
+    fun unregisterListener() {
+        sensorManager.unregisterListener(this)
+    }
+
+    override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
+    }
+
+    override fun onSensorChanged(event: SensorEvent) {
+        if (event.sensor.type == Sensor.TYPE_GYROSCOPE) {
+            listener.onValueChanged(event.values[0], event.values[1], event.values[2])
+        }
     }
 }
