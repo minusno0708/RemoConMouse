@@ -8,14 +8,24 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/colAxis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="axis"
+        app:layout_constraintBottom_toBottomOf="@+id/labelX"
+        app:layout_constraintEnd_toEndOf="@id/colGyro"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/labelX"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="X"
         app:layout_constraintBottom_toBottomOf="@+id/labelY"
-        app:layout_constraintEnd_toEndOf="@id/valueX"
+        app:layout_constraintEnd_toEndOf="@id/gyroX"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/colAxis" />
 
     <TextView
         android:id="@+id/labelY"
@@ -23,7 +33,7 @@
         android:layout_height="wrap_content"
         android:text="Y"
         app:layout_constraintBottom_toBottomOf="@+id/labelZ"
-        app:layout_constraintEnd_toEndOf="@id/valueY"
+        app:layout_constraintEnd_toEndOf="@id/gyroY"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/labelX" />
 
@@ -33,35 +43,82 @@
         android:layout_height="wrap_content"
         android:text="Z"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/valueZ"
+        app:layout_constraintEnd_toEndOf="@id/gyroZ"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/labelY" />
 
     <TextView
-        android:id="@+id/valueX"
+        android:id="@+id/colGyro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/valueY"
+        android:text="Gyro"
+        app:layout_constraintBottom_toBottomOf="@id/gyroX"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/valueY"
+        android:id="@+id/gyroX"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/valueZ"
+        app:layout_constraintBottom_toBottomOf="@+id/gyroY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/valueX" />
+        app:layout_constraintTop_toTopOf="@id/colGyro" />
 
     <TextView
-        android:id="@+id/valueZ"
+        android:id="@+id/gyroY"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/gyroZ"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/gyroX" />
+
+    <TextView
+        android:id="@+id/gyroZ"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/valueY" />
+        app:layout_constraintTop_toTopOf="@id/gyroY" />
+
+    <TextView
+        android:id="@+id/colAcc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Acc"
+        app:layout_constraintBottom_toBottomOf="@id/AccX"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/colGyro"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/AccX"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/AccY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/gyroX"
+        app:layout_constraintTop_toTopOf="@id/colAcc" />
+
+    <TextView
+        android:id="@+id/AccY"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/AccZ"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/gyroY"
+        app:layout_constraintTop_toTopOf="@id/AccX" />
+
+    <TextView
+        android:id="@+id/AccZ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/gyroZ"
+        app:layout_constraintTop_toTopOf="@id/AccY" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

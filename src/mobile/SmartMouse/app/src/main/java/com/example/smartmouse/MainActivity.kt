@@ -36,9 +36,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateValues(x: Float, y: Float, z: Float) {
-        binding.valueX.text = valueRound(x).toString()
-        binding.valueY.text = valueRound(y).toString()
-        binding.valueZ.text = valueRound(z).toString()
+        binding.gyroX.text = valueRound(x).toString()
+        binding.gyroY.text = valueRound(y).toString()
+        binding.gyroZ.text = valueRound(z).toString()
     }
 
     private fun valueRound(value: Float): Float {
