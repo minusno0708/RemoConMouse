@@ -14,8 +14,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var sensorManager: SensorManager
+
     private lateinit var gyroscopeManager: GyroscopeManager
     private lateinit var gyroscopeListener: GyroscopeListener
+
+    private lateinit var accelerometerManager: AccelerometerManager
+    private lateinit var accelerometerListener: AccelerometerListener
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,20 +29,36 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+
         gyroscopeListener = GyroscopeListener()
         gyroscopeManager = GyroscopeManager(sensorManager, gyroscopeListener)
+
+        accelerometerListener = AccelerometerListener()
+        accelerometerManager = AccelerometerManager(sensorManager, accelerometerListener)
     }
 
     inner class GyroscopeListener: GyroscopeManager.GyroscopeListener {
         override fun onValueChanged(x: Float, y: Float, z: Float) {
-            updateValues(x, y, z)
+            updateGyroValues(x, y, z)
         }
     }
 
-    private fun updateValues(x: Float, y: Float, z: Float) {
+    private fun updateGyroValues(x: Float, y: Float, z: Float) {
         binding.gyroX.text = valueRound(x).toString()
         binding.gyroY.text = valueRound(y).toString()
         binding.gyroZ.text = valueRound(z).toString()
+    }
+
+    inner class AccelerometerListener: AccelerometerManager.AccelerometerListener {
+        override fun onValueChanged(x: Float, y: Float, z: Float) {
+            updateAccValues(x, y, z)
+        }
+    }
+
+    private fun updateAccValues(x: Float, y: Float, z: Float) {
+        binding.accX.text = valueRound(x).toString()
+        binding.accY.text = valueRound(y).toString()
+        binding.accZ.text = valueRound(z).toString()
     }
 
     private fun valueRound(value: Float): Float {
@@ -48,10 +68,12 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         gyroscopeManager.registerListener()
+        accelerometerManager.registerListener()
     }
 
     override fun onPause() {
         super.onPause()
         gyroscopeManager.unregisterListener()
+        accelerometerManager.unregisterListener()
     }
 }
