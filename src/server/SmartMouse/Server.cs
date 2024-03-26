@@ -30,9 +30,9 @@ namespace SmartMouse
                 });
                 
             }
-            catch
+            catch (Exception e)
             {
-                Form1.updateLog("サーバーの起動に失敗しました");
+                Form1.updateLog($"サーバーの起動に失敗しました\n{e}");
             }
             finally
             {

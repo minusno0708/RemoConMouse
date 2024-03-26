@@ -39,18 +39,26 @@ namespace SmartMouse
             Server.Start();
         }
 
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Server.Send(textBox3.Text);
+        }
+
         public static void updateLog(string newLogText)
         {
             if (instance != null)
             {
                 string resultText = newLogText + "\n" + instance.label4.Text;
-                instance.label4.Text = resultText;
-            }
-        }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            Server.Send(textBox3.Text);
+                if (instance.label4.InvokeRequired)
+                {
+                    instance.label4.Invoke(new Action<string>(updateLog), newLogText);
+                }
+                else
+                {
+                    instance.label4.Text = resultText;
+                }
+            }
         }
     }
 }
