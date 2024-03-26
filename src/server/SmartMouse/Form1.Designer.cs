@@ -35,6 +35,7 @@
             button1 = new Button();
             label3 = new Label();
             button2 = new Button();
+            label4 = new Label();
             SuspendLayout();
             // 
             // textBox1
@@ -102,11 +103,21 @@
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(223, 175);
+            label4.Name = "label4";
+            label4.Size = new Size(38, 15);
+            label4.TabIndex = 7;
+            label4.Text = "No logs";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(label4);
             Controls.Add(button2);
             Controls.Add(label3);
             Controls.Add(button1);
@@ -130,5 +141,6 @@
         private Button button1;
         private Label label3;
         private Button button2;
+        private Label label4;
     }
 }

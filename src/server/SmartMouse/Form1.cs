@@ -1,10 +1,15 @@
+using System.ComponentModel;
+
 namespace SmartMouse
 {
     public partial class Form1 : Form
     {
+        private static Form1? instance;
+
         public Form1()
         {
             InitializeComponent();
+            instance = this;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -32,6 +37,14 @@ namespace SmartMouse
         private void button2_Click(object sender, EventArgs e)
         {
             Server.Server.Start();
+        }
+
+        public static void updateLog(string newLogText)
+        {
+            if (instance != null)
+            {
+                instance.label4.Text = newLogText;
+            }
         }
     }
 }

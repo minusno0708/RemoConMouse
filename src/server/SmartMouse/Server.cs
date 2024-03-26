@@ -1,6 +1,7 @@
 ﻿using System.Net.Sockets;
 using System.Net;
 using System;
+using SmartMouse;
 
 namespace Server
 {
@@ -12,10 +13,10 @@ namespace Server
             int port = 8080;
             TcpListener server = new TcpListener(IPAddress.Parse(ip), port);
             server.Start();
-            Console.WriteLine("Server has started on {0}:{1}.{2} Waiting for a connection", ip, port, Environment.NewLine);
+            SmartMouse.Form1.updateLog($"Server has started on {ip}:{port}.{Environment.NewLine} Waiting for a connection");
 
             TcpClient client = new TcpClient();
-            Console.WriteLine("A client connected.");
+            SmartMouse.Form1.updateLog("A client connected.");
         }
     }
 }
