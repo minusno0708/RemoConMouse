@@ -25,6 +25,7 @@ namespace SmartMouse
                         byte[] bytes = listener.Receive(ref groupEP);
                         Form1.updateLog($"Received broadcast from {groupEP} :");
                         Form1.updateLog($"Recieved Message is {Encoding.ASCII.GetString(bytes, 0, bytes.Length)}");
+                        CallController(Encoding.ASCII.GetString(bytes, 0, bytes.Length));
                     }
                 });
                 
@@ -38,6 +39,24 @@ namespace SmartMouse
                 listener.Close();
             }
             
+        }
+
+        private static void CallController(string message)
+        {
+            string[] commands = message.Split("-");
+            
+            if (commands[0] == "move")
+            {
+                int inputX, inputY;
+                try
+                {
+                    inputX = int.Parse(commands[1]);
+                    inputY = int.Parse(commands[2]);
+                    Controller.Mouse.Move(inputX, inputY);
+                }
+                catch {}
+            }
+
         }
 
         public static void Send(string message)
