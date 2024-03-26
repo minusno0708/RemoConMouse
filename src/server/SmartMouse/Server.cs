@@ -24,8 +24,7 @@ namespace SmartMouse
                         Form1.updateLog("Waiting for broadcast");
                         byte[] bytes = listener.Receive(ref groupEP);
                         Form1.updateLog($"Received broadcast from {groupEP} :");
-                        Form1.updateLog($" {Encoding.ASCII.GetString(bytes, 0, bytes.Length)}");
-                        Console.WriteLine($" {Encoding.ASCII.GetString(bytes, 0, bytes.Length)}");
+                        Form1.updateLog($"Recieved Message is {Encoding.ASCII.GetString(bytes, 0, bytes.Length)}");
                     }
                 });
                 
@@ -41,13 +40,13 @@ namespace SmartMouse
             
         }
 
-        public static void Send()
+        public static void Send(string message)
         {
             Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
             IPAddress broadcast = IPAddress.Parse("127.0.0.1");
 
-            byte[] sendbuf = Encoding.ASCII.GetBytes("test");
+            byte[] sendbuf = Encoding.ASCII.GetBytes(message);
             IPEndPoint ep = new IPEndPoint(broadcast, 11000);
 
             s.SendTo(sendbuf, ep);

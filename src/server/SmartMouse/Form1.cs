@@ -32,7 +32,6 @@ namespace SmartMouse
                 inputY = 0;
             }
             Controller.Mouse.Move(inputX, inputY);
-            Server.Send();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -44,9 +43,14 @@ namespace SmartMouse
         {
             if (instance != null)
             {
-                string resultText = newLogText + "\n"+  instance.label4.Text;
+                string resultText = newLogText + "\n" + instance.label4.Text;
                 instance.label4.Text = resultText;
             }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Server.Send(textBox3.Text);
         }
     }
 }
