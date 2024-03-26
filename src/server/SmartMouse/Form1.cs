@@ -32,18 +32,20 @@ namespace SmartMouse
                 inputY = 0;
             }
             Controller.Mouse.Move(inputX, inputY);
+            Server.Send();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Server.Server.Start();
+            Server.Start();
         }
 
         public static void updateLog(string newLogText)
         {
             if (instance != null)
             {
-                instance.label4.Text = newLogText;
+                string resultText = newLogText + "\n"+  instance.label4.Text;
+                instance.label4.Text = resultText;
             }
         }
     }
