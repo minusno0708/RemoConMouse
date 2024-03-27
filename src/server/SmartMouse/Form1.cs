@@ -48,16 +48,7 @@ namespace SmartMouse
         {
             if (instance != null)
             {
-                string resultText = newLogText + "\n" + instance.label4.Text;
-
-                if (instance.label4.InvokeRequired)
-                {
-                    instance.label4.Invoke(new Action<string>(updateLog), newLogText);
-                }
-                else
-                {
-                    instance.label4.Text = resultText;
-                }
+                instance.label4.Text = newLogText;   
             }
         }
     }

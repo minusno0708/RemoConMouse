@@ -21,9 +21,7 @@ namespace SmartMouse
                 {
                     while (true)
                     {
-                        Form1.updateLog("Waiting for broadcast");
                         byte[] bytes = listener.Receive(ref groupEP);
-                        Form1.updateLog($"Received broadcast from {groupEP} :");
                         Form1.updateLog($"Recieved Message is {Encoding.ASCII.GetString(bytes, 0, bytes.Length)}");
                         CallController(Encoding.ASCII.GetString(bytes, 0, bytes.Length));
                     }
