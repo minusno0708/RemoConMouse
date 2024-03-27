@@ -7,10 +7,10 @@ namespace SmartMouse
 {
     class Server
     {
+        private static int port = 11000;
 
         public static async void Start()
         {
-            int port = 11000;
             UdpClient listener = new UdpClient(port);
             IPEndPoint groupEP = new IPEndPoint(IPAddress.Any, port);
             Form1.updateLog($"UDP Server has started on {port} Waiting for a connection");
@@ -43,7 +43,7 @@ namespace SmartMouse
 
         private static void CallController(string message)
         {
-            string[] commands = message.Split("-");
+            string[] commands = message.Split(".");
             
             if (commands[0] == "move")
             {
@@ -59,11 +59,16 @@ namespace SmartMouse
 
         }
 
+        private static void OpenPort(int port)
+        {
+
+        }
+
         public static void Send(string message)
         {
             Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
-            IPAddress broadcast = IPAddress.Parse("127.0.0.1");
+            IPAddress broadcast = IPAddress.Parse("192.168.11.64");
 
             byte[] sendbuf = Encoding.ASCII.GetBytes(message);
             IPEndPoint ep = new IPEndPoint(broadcast, 11000);

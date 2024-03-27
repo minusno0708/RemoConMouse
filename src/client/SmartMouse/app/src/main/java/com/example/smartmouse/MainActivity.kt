@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var accelerometerManager: AccelerometerManager
     private lateinit var accelerometerListener: AccelerometerListener
 
+    private val connectClient = ConnectClient()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +40,7 @@ class MainActivity : AppCompatActivity() {
 
     inner class GyroscopeListener: GyroscopeManager.GyroscopeListener {
         override fun onValueChanged(x: Float, y: Float, z: Float) {
+            connectClient.connect("192.168.11.64", 11000, "test".toByteArray())
             updateGyroValues(x, y, z)
         }
     }
@@ -75,5 +77,9 @@ class MainActivity : AppCompatActivity() {
         super.onPause()
         gyroscopeManager.unregisterListener()
         accelerometerManager.unregisterListener()
+    }
+
+    private fun updateLog(message: String) {
+        binding.logMessage.text = message;
     }
 }
