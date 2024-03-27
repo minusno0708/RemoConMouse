@@ -36,11 +36,12 @@ class MainActivity : AppCompatActivity() {
 
         accelerometerListener = AccelerometerListener()
         accelerometerManager = AccelerometerManager(sensorManager, accelerometerListener)
+
+        connectClient.connect("192.168.11.64", 11000, "test".toByteArray())
     }
 
     inner class GyroscopeListener: GyroscopeManager.GyroscopeListener {
         override fun onValueChanged(x: Float, y: Float, z: Float) {
-            connectClient.connect("192.168.11.64", 11000, "test".toByteArray())
             updateGyroValues(x, y, z)
         }
     }

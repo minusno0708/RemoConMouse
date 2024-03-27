@@ -3,8 +3,12 @@ package com.example.smartmouse
 import java.net.DatagramPacket
 import java.net.DatagramSocket
 import java.net.InetAddress
+import java.util.Timer
+import kotlin.concurrent.schedule
 
 class ConnectClient {
+    private val timer = Timer()
+
     private fun send(host: String, port: Int, data: ByteArray, senderPort: Int): Boolean {
         var ret = false
         var socket: DatagramSocket? = null
@@ -24,8 +28,10 @@ class ConnectClient {
     }
 
     fun connect (host: String, port: Int, data: ByteArray, senderPort: Int = 0) {
-        Thread {
-            send(host, port, data, senderPort)
-        }.start()
+        timer.schedule(0, 200) {
+            Thread {
+                send(host, port, data, senderPort)
+            }.start()
+        }
     }
 }
