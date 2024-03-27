@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         accelerometerListener = AccelerometerListener()
         accelerometerManager = AccelerometerManager(sensorManager, accelerometerListener)
 
-        connectClient.connect("192.168.11.64", 11000, "test".toByteArray())
+        connectClient.connect("192.168.11.64", 11000)
     }
 
     inner class GyroscopeListener: GyroscopeManager.GyroscopeListener {
@@ -50,6 +50,11 @@ class MainActivity : AppCompatActivity() {
         binding.gyroX.text = valueRound(x).toString()
         binding.gyroY.text = valueRound(y).toString()
         binding.gyroZ.text = valueRound(z).toString()
+
+        connectClient.setMoveCoo(
+            (-z*100).toInt(),
+            (-x*100).toInt()
+        )
     }
 
     inner class AccelerometerListener: AccelerometerManager.AccelerometerListener {

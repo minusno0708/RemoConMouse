@@ -9,6 +9,13 @@ import kotlin.concurrent.schedule
 class ConnectClient {
     private val timer = Timer()
 
+    private var moveCoo: IntArray = intArrayOf(0, 0)
+
+    fun setMoveCoo(x: Int, y: Int) {
+        moveCoo[0] = x
+        moveCoo[1] = y
+    }
+
     private fun send(host: String, port: Int, data: ByteArray, senderPort: Int): Boolean {
         var ret = false
         var socket: DatagramSocket? = null
@@ -27,10 +34,10 @@ class ConnectClient {
         return ret
     }
 
-    fun connect (host: String, port: Int, data: ByteArray, senderPort: Int = 0) {
-        timer.schedule(0, 200) {
+    fun connect (host: String, port: Int, senderPort: Int = 0) {
+        timer.schedule(0, 100) {
             Thread {
-                send(host, port, data, senderPort)
+                send(host, port, "move.${moveCoo[0]}.${moveCoo[1]}".toByteArray(), senderPort)
             }.start()
         }
     }
