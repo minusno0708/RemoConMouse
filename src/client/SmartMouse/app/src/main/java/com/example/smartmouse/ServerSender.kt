@@ -6,22 +6,26 @@ import java.net.InetAddress
 import java.util.Timer
 import kotlin.concurrent.schedule
 
-class ConnectClient {
+class ServerSender {
     private val timer = Timer()
 
     private var moveCoo: IntArray = intArrayOf(0, 0)
+
+    private var ip: String = ""
+    private var port: Int = 0
+    private var senderPort: Int = 0
 
     fun setMoveCoo(x: Int, y: Int) {
         moveCoo[0] = x
         moveCoo[1] = y
     }
 
-    private fun send(host: String, port: Int, data: ByteArray, senderPort: Int): Boolean {
+    private fun send(data: ByteArray): Boolean {
         var ret = false
         var socket: DatagramSocket? = null
         try {
             socket = DatagramSocket(senderPort)
-            val address = InetAddress.getByName(host)
+            val address = InetAddress.getByName(ip)
             val packet = DatagramPacket(data, data.size, address, port)
             socket.send(packet)
             ret = true
@@ -34,10 +38,24 @@ class ConnectClient {
         return ret
     }
 
-    fun connect (host: String, port: Int, senderPort: Int = 0) {
+    fun connect (ip: String, port: Int, senderPort: Int = 0): Boolean {
+        var isConnect: Boolean = false
+
+        this.ip = ip
+        this.port = port
+        this.senderPort = senderPort
+
+        Thread {
+            isConnect = send("".toByteArray())
+        }.start()
+
+        return isConnect
+    }
+
+    fun mouseEnable () {
         timer.schedule(0, 100) {
             Thread {
-                send(host, port, "move.${moveCoo[0]}.${moveCoo[1]}".toByteArray(), senderPort)
+                send("move.${moveCoo[0]}.${moveCoo[1]}".toByteArray())
             }.start()
         }
     }

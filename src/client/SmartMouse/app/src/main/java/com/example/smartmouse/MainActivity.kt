@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var accelerometerManager: AccelerometerManager
     private lateinit var accelerometerListener: AccelerometerListener
 
-    private val connectClient = ConnectClient()
+    private val serverSender = ServerSender()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +37,8 @@ class MainActivity : AppCompatActivity() {
         accelerometerListener = AccelerometerListener()
         accelerometerManager = AccelerometerManager(sensorManager, accelerometerListener)
 
-        connectClient.connect("192.168.11.64", 11000)
+        serverSender.connect("192.168.11.64", 11000)
+        serverSender.mouseEnable()
     }
 
     inner class GyroscopeListener: GyroscopeManager.GyroscopeListener {
@@ -51,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         binding.gyroY.text = valueRound(y).toString()
         binding.gyroZ.text = valueRound(z).toString()
 
-        connectClient.setMoveCoo(
+        serverSender.setMoveCoo(
             (-z*100).toInt(),
             (-x*100).toInt()
         )
