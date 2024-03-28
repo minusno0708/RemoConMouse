@@ -6,7 +6,7 @@ import java.net.InetAddress
 import java.util.Timer
 import kotlin.concurrent.schedule
 
-class ServerSender {
+class ServerManager {
     private val timer = Timer()
 
     private var moveCoo: IntArray = intArrayOf(0, 0)

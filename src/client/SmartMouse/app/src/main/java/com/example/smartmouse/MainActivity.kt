@@ -3,11 +3,7 @@ package com.example.smartmouse
 import android.content.Context
 import android.os.Bundle
 import android.hardware.SensorManager
-import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.smartmouse.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -21,7 +17,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var accelerometerManager: AccelerometerManager
     private lateinit var accelerometerListener: AccelerometerListener
 
-    private val serverSender = ServerSender()
+    private val serverSender = ServerManager()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
