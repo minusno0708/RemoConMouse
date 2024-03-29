@@ -46,6 +46,7 @@
         android:ems="10"
         android:inputType="text"
         android:text="192.168.11.64"
+        android:hint="接続先のIPを入力してください"
         app:layout_constraintBottom_toTopOf="@+id/toMouse"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -3,8 +3,6 @@ package com.example.smartmouse
 import java.net.DatagramPacket
 import java.net.DatagramSocket
 import java.net.InetAddress
-import java.util.Timer
-import kotlin.concurrent.schedule
 
 class ServerManager {
     private var ip: String = ""

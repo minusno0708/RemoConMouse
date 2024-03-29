@@ -4,10 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.hardware.SensorManager
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.smartmouse.databinding.ActivityMouseBinding
 import java.util.Timer
 import kotlin.concurrent.schedule
@@ -61,17 +58,17 @@ class MouseActivity : AppCompatActivity() {
     }
 
     private fun switchMouseOnOf() {
-        if (!isMouseOn) {
+        isMouseOn = if (!isMouseOn) {
             mouseEnable()
-            isMouseOn = true
+            true
         } else {
             mouseDisable()
-            isMouseOn = false
+            false
         }
     }
 
     private fun updateLog(message: String) {
-        binding.logMessage.text = message;
+        binding.logMessage.text = message
     }
 
     inner class GyroscopeListener: GyroscopeManager.GyroscopeListener {
