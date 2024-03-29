@@ -53,6 +53,9 @@ class MouseActivity : AppCompatActivity() {
     }
 
     private fun toHome() {
+        if (isMouseOn) {
+            mouseDisable()
+        }
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
     }
