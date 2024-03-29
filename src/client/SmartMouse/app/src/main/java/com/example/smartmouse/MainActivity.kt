@@ -7,10 +7,14 @@ import android.hardware.SensorManager
 import androidx.appcompat.app.AppCompatActivity
 import com.example.smartmouse.databinding.ActivityMainBinding
 
+object ServerData {
+    val serverManager = ServerManager()
+}
+
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
-    private val serverManager = ServerManager()
+    private val serverManager = ServerData.serverManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         serverManager.connect("192.168.11.64", 11000)
+        updateLog(serverManager.get())
     }
 
     private fun toMouse() {

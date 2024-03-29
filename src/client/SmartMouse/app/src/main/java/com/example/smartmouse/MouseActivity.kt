@@ -21,7 +21,7 @@ class MouseActivity : AppCompatActivity() {
     private lateinit var accelerometerManager: AccelerometerManager
     private lateinit var accelerometerListener: MouseActivity.AccelerometerListener
 
-    private val serverManager = ServerManager()
+    private val serverManager = ServerData.serverManager
     private val controller = OutputController(serverManager)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,13 +41,17 @@ class MouseActivity : AppCompatActivity() {
         accelerometerListener = AccelerometerListener()
         accelerometerManager = AccelerometerManager(sensorManager, accelerometerListener)
 
-        serverManager.connect("192.168.11.64", 11000)
         controller.mouseEnable()
+        updateLog(serverManager.get())
     }
 
     private fun toHome() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun updateLog(message: String) {
+        binding.logMessage.text = message;
     }
 
     inner class GyroscopeListener: GyroscopeManager.GyroscopeListener {

@@ -11,7 +11,7 @@ class ServerManager {
     private var port: Int = 0
     private var senderPort: Int = 0
 
-    fun connect (ip: String, port: Int, senderPort: Int = 0): Boolean {
+    fun connect(ip: String, port: Int, senderPort: Int = 0): Boolean {
         var isConnect: Boolean = false
 
         this.ip = ip
@@ -23,6 +23,10 @@ class ServerManager {
         }.start()
 
         return isConnect
+    }
+
+    fun get(): String {
+        return "${this.ip}:${this.port}"
     }
 
     fun send(data: ByteArray): Boolean {
