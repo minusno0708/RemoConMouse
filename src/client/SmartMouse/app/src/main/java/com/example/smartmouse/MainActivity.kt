@@ -2,6 +2,7 @@ package com.example.smartmouse
 
 import android.content.Context
 import android.os.Bundle
+import android.content.Intent
 import android.hardware.SensorManager
 import androidx.appcompat.app.AppCompatActivity
 import com.example.smartmouse.databinding.ActivityMainBinding
@@ -25,6 +26,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        binding.toMouse.setOnClickListener {
+            toMouse()
+        }
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
@@ -36,6 +40,11 @@ class MainActivity : AppCompatActivity() {
 
         serverManager.connect("192.168.11.64", 11000)
         controller.mouseEnable()
+    }
+
+    private fun toMouse() {
+        val intent = Intent(this, MouseActivity::class.java)
+        startActivity(intent)
     }
 
     inner class GyroscopeListener: GyroscopeManager.GyroscopeListener {
