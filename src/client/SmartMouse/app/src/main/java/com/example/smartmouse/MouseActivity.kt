@@ -9,20 +9,23 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.smartmouse.databinding.ActivityMouseBinding
+import java.util.Timer
+import kotlin.concurrent.schedule
 
 class MouseActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMouseBinding
 
     private lateinit var sensorManager: SensorManager
-
     private lateinit var gyroscopeManager: GyroscopeManager
     private lateinit var gyroscopeListener: MouseActivity.GyroscopeListener
-
     private lateinit var accelerometerManager: AccelerometerManager
     private lateinit var accelerometerListener: MouseActivity.AccelerometerListener
 
     private val serverManager = ServerData.serverManager
-    private val controller = OutputController(serverManager)
+    private val timer = Timer()
+
+    private var gyroValues: FloatArray = floatArrayOf(0f, 0f, 0f)
+    private var accValues: FloatArray = floatArrayOf(0f, 0f, 0f)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +44,7 @@ class MouseActivity : AppCompatActivity() {
         accelerometerListener = AccelerometerListener()
         accelerometerManager = AccelerometerManager(sensorManager, accelerometerListener)
 
-        controller.mouseEnable()
+        mouseEnable()
         updateLog(serverManager.get())
     }
 
@@ -56,28 +59,14 @@ class MouseActivity : AppCompatActivity() {
 
     inner class GyroscopeListener: GyroscopeManager.GyroscopeListener {
         override fun onValueChanged(x: Float, y: Float, z: Float) {
-            updateGyroValues(x, y, z)
+            gyroValues = floatArrayOf(x, y, z)
         }
-    }
-
-    private fun updateGyroValues(x: Float, y: Float, z: Float) {
-        controller.setMoveCoo(
-            (-z*100).toInt(),
-            (-x*100).toInt()
-        )
     }
 
     inner class AccelerometerListener: AccelerometerManager.AccelerometerListener {
         override fun onValueChanged(x: Float, y: Float, z: Float) {
-            updateAccValues(x, y, z)
+            accValues = floatArrayOf(x, y, z)
         }
-    }
-
-    private fun updateAccValues(x: Float, y: Float, z: Float) {
-    }
-
-    private fun valueRound(value: Float): Float {
-        return Math.round(value * 100f) / 100f
     }
 
     override fun onResume() {
@@ -90,5 +79,16 @@ class MouseActivity : AppCompatActivity() {
         super.onPause()
         gyroscopeManager.unregisterListener()
         accelerometerManager.unregisterListener()
+    }
+
+    private fun mouseEnable() {
+        timer.schedule(0, 100) {
+            val moveX: Int = (-gyroValues[2]*100).toInt()
+            val moveY: Int = (-gyroValues[0]*100).toInt()
+
+            Thread {
+                serverManager.send("move.${moveX}.${moveY}".toByteArray())
+            }.start()
+        }
     }
 }
