@@ -45,10 +45,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateGyroValues(x: Float, y: Float, z: Float) {
-        binding.gyroX.text = valueRound(x).toString()
-        binding.gyroY.text = valueRound(y).toString()
-        binding.gyroZ.text = valueRound(z).toString()
-
         controller.setMoveCoo(
             (-z*100).toInt(),
             (-x*100).toInt()
@@ -62,9 +58,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateAccValues(x: Float, y: Float, z: Float) {
-        binding.accX.text = valueRound(x).toString()
-        binding.accY.text = valueRound(y).toString()
-        binding.accZ.text = valueRound(z).toString()
     }
 
     private fun valueRound(value: Float): Float {
