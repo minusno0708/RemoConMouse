@@ -27,6 +27,8 @@ class MouseActivity : AppCompatActivity() {
     private var gyroValues: FloatArray = floatArrayOf(0f, 0f, 0f)
     private var accValues: FloatArray = floatArrayOf(0f, 0f, 0f)
 
+    private var isMouseOn = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMouseBinding.inflate(layoutInflater)
@@ -34,6 +36,9 @@ class MouseActivity : AppCompatActivity() {
         setContentView(view)
         binding.toHome.setOnClickListener {
             toHome()
+        }
+        binding.mouseSwitch.setOnClickListener {
+            switchMouseOnOf()
         }
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
@@ -44,13 +49,22 @@ class MouseActivity : AppCompatActivity() {
         accelerometerListener = AccelerometerListener()
         accelerometerManager = AccelerometerManager(sensorManager, accelerometerListener)
 
-        mouseEnable()
         updateLog(serverManager.get())
     }
 
     private fun toHome() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun switchMouseOnOf() {
+        if (!isMouseOn) {
+            mouseEnable()
+            isMouseOn = true
+        } else {
+            mouseDisable()
+            isMouseOn = false
+        }
     }
 
     private fun updateLog(message: String) {
@@ -91,4 +105,9 @@ class MouseActivity : AppCompatActivity() {
             }.start()
         }
     }
+
+    private fun mouseDisable() {
+        timer.cancel()
+    }
+
 }
