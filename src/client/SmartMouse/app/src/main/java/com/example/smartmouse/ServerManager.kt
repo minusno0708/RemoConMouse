@@ -11,15 +11,15 @@ class ServerManager {
     private var port: Int = 0
     private var senderPort: Int = 0
 
-    fun connect(ip: String, port: Int, senderPort: Int = 0): Boolean {
-        var isConnect: Boolean = false
+    var isConnect: Boolean = false
 
+    fun connect(ip: String, port: Int, senderPort: Int = 0): Boolean {
         this.ip = ip
         this.port = port
         this.senderPort = senderPort
 
         Thread {
-            isConnect = send("".toByteArray())
+            send("".toByteArray())
         }.start()
 
         return isConnect
@@ -29,21 +29,18 @@ class ServerManager {
         return "${this.ip}:${this.port}"
     }
 
-    fun send(data: ByteArray): Boolean {
-        var ret = false
+    fun send(data: ByteArray) {
         var socket: DatagramSocket? = null
         try {
             socket = DatagramSocket(senderPort)
             val address = InetAddress.getByName(ip)
             val packet = DatagramPacket(data, data.size, address, port)
             socket.send(packet)
-            ret = true
+            isConnect = true
         } catch (e: Exception) {
-            e.printStackTrace()
+            isConnect = false
         } finally {
             socket?.close()
         }
-
-        return ret
     }
 }

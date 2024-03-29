@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.content.Intent
 import android.hardware.SensorManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.smartmouse.databinding.ActivityMainBinding
 
@@ -25,13 +26,19 @@ class MainActivity : AppCompatActivity() {
             toMouse()
         }
 
-        updateLog("log")
+        updateLog(serverManager.isConnect.toString())
     }
 
     private fun toMouse() {
         serverManager.connect(binding.inputIp.text.toString(), 11000)
-        val intent = Intent(this, MouseActivity::class.java)
-        startActivity(intent)
+        Thread.sleep(10)
+        if (serverManager.isConnect) {
+            val intent = Intent(this, MouseActivity::class.java)
+            startActivity(intent)
+        } else {
+            val failedMessage: String = "接続に失敗しました"
+            Toast.makeText(applicationContext, failedMessage, Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun updateLog(message: String) {
