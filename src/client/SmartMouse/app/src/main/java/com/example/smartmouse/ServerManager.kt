@@ -7,36 +7,9 @@ import java.util.Timer
 import kotlin.concurrent.schedule
 
 class ServerManager {
-    private val timer = Timer()
-
-    private var moveCoo: IntArray = intArrayOf(0, 0)
-
     private var ip: String = ""
     private var port: Int = 0
     private var senderPort: Int = 0
-
-    fun setMoveCoo(x: Int, y: Int) {
-        moveCoo[0] = x
-        moveCoo[1] = y
-    }
-
-    private fun send(data: ByteArray): Boolean {
-        var ret = false
-        var socket: DatagramSocket? = null
-        try {
-            socket = DatagramSocket(senderPort)
-            val address = InetAddress.getByName(ip)
-            val packet = DatagramPacket(data, data.size, address, port)
-            socket.send(packet)
-            ret = true
-        } catch (e: Exception) {
-            e.printStackTrace()
-        } finally {
-            socket?.close()
-        }
-
-        return ret
-    }
 
     fun connect (ip: String, port: Int, senderPort: Int = 0): Boolean {
         var isConnect: Boolean = false
@@ -52,11 +25,21 @@ class ServerManager {
         return isConnect
     }
 
-    fun mouseEnable () {
-        timer.schedule(0, 100) {
-            Thread {
-                send("move.${moveCoo[0]}.${moveCoo[1]}".toByteArray())
-            }.start()
+    fun send(data: ByteArray): Boolean {
+        var ret = false
+        var socket: DatagramSocket? = null
+        try {
+            socket = DatagramSocket(senderPort)
+            val address = InetAddress.getByName(ip)
+            val packet = DatagramPacket(data, data.size, address, port)
+            socket.send(packet)
+            ret = true
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            socket?.close()
         }
+
+        return ret
     }
 }
