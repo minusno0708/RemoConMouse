@@ -22,7 +22,7 @@ class MouseActivity : AppCompatActivity() {
     private lateinit var accelerometerListener: MouseActivity.AccelerometerListener
 
     private val serverManager = ServerData.serverManager
-    private val timer = Timer()
+    private var timer = Timer()
 
     private var gyroValues: FloatArray = floatArrayOf(0f, 0f, 0f)
     private var accValues: FloatArray = floatArrayOf(0f, 0f, 0f)
@@ -96,6 +96,7 @@ class MouseActivity : AppCompatActivity() {
     }
 
     private fun mouseEnable() {
+        timer = Timer()
         timer.schedule(0, 100) {
             val moveX: Int = (-gyroValues[2]*100).toInt()
             val moveY: Int = (-gyroValues[0]*100).toInt()
