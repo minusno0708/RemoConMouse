@@ -55,9 +55,13 @@ namespace SmartMouse
 
         private static void CallController(string message)
         {
-            string[] commands = message.Split(".");
-            
-            if (commands[0] == "move")
+            string[] commands = message.Split(",");
+
+            if (commands[0] == "connect") 
+            {
+                Send(commands[1], "server connected");
+            }
+            else if (commands[0] == "move")
             {
                 int inputX, inputY;
                 try
@@ -71,11 +75,11 @@ namespace SmartMouse
 
         }
 
-        public static void Send(string message)
+        public static void Send(string ip, string message)
         {
             Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
-            IPAddress broadcast = IPAddress.Parse("192.168.11.64");
+            IPAddress broadcast = IPAddress.Parse(ip);
 
             byte[] sendbuf = Encoding.ASCII.GetBytes(message);
             IPEndPoint ep = new IPEndPoint(broadcast, 11000);
