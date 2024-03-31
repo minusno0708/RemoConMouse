@@ -25,8 +25,10 @@ namespace SmartMouse
 
         public static async void Start()
         {
-            UdpClient listener = new UdpClient(port);
-            IPEndPoint groupEP = new IPEndPoint(IPAddress.Any, port);
+            var udpSocket = new Socket(SocketType.Dgram, ProtocolType.Udp);
+            var udpLocal = new IPEndPoint(IPAddress.Any, port);
+            udpSocket.Bind(udpLocal);
+
             Form1.updateLog($"UDP Server has started on {port} Waiting for a connection");
 
             try
@@ -35,9 +37,12 @@ namespace SmartMouse
                 {
                     while (true)
                     {
-                        byte[] bytes = listener.Receive(ref groupEP);
-                        Form1.updateLog($"Recieved Message is {Encoding.ASCII.GetString(bytes, 0, bytes.Length)}");
-                        CallController(Encoding.ASCII.GetString(bytes, 0, bytes.Length));
+                        byte[] udpBuffer = new byte[512];
+                        EndPoint udpRemote = new IPEndPoint(IPAddress.Any, port);
+                        var udpLength = udpSocket.ReceiveFrom(udpBuffer, ref udpRemote);
+                        string updData = Encoding.UTF8.GetString(udpBuffer);
+                        Form1.updateLog($"Received Message is {updData}");
+                        CallController(updData);
                     }
                 });
                 
@@ -48,7 +53,7 @@ namespace SmartMouse
             }
             finally
             {
-                listener.Close();
+                udpSocket.Close();
             }
             
         }
