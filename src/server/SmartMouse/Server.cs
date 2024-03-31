@@ -41,19 +41,13 @@ namespace SmartMouse
                 {
                     while (true)
                     {
-                        tcpSocket.Listen(1);
-                        var tcpClient = tcpSocket.Accept();
-                        byte[] tcpBuffer = new byte[1024];
-                        var tcpLength = tcpClient.Receive(tcpBuffer);
-                        string tcpData = Encoding.UTF8.GetString(tcpBuffer, 0, tcpLength);
-                        Form1.updateLog($"Received Message is {tcpData}");
+                        string data;
+                        data = TcpListener(tcpSocket);
+                        Form1.updateLog($"Received Message is {data}");
 
-                        byte[] udpBuffer = new byte[512];
-                        EndPoint udpRemote = new IPEndPoint(IPAddress.Any, port);
-                        var udpLength = udpSocket.ReceiveFrom(udpBuffer, ref udpRemote);
-                        string updData = Encoding.UTF8.GetString(udpBuffer);
-                        Form1.updateLog($"Received Message is {updData}");
-                        CallController(updData);
+                        data = UdpListener(udpSocket);
+                        Form1.updateLog($"Received Message is {data}");
+                        CallController(data);
                     }
                 });
                 
@@ -68,6 +62,27 @@ namespace SmartMouse
                 udpSocket.Close();
             }
             
+        }
+
+        private static string TcpListener(Socket socket)
+        {
+            socket.Listen(1);
+            var client = socket.Accept();
+            byte[] buffer = new byte[512];
+            var length = client.Receive(buffer);
+            string data = Encoding.UTF8.GetString(buffer, 0, length);
+
+            return data;
+        }
+
+        private static string UdpListener(Socket socket)
+        {
+            byte[] buffer = new byte[512];
+            EndPoint remote = new IPEndPoint(IPAddress.Any, port);
+            var length = socket.ReceiveFrom(buffer, ref remote);
+            string data = Encoding.UTF8.GetString(buffer);
+
+            return data;
         }
 
         private static void CallController(string message)
