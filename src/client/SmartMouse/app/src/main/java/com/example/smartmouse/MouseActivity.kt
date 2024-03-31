@@ -102,7 +102,7 @@ class MouseActivity : AppCompatActivity() {
             val moveY: Int = (-gyroValues[0]*100).toInt()
 
             Thread {
-                serverManager.send("move.${moveX}.${moveY}".toByteArray())
+                serverManager.send("move,${moveX},${moveY}".toByteArray())
             }.start()
         }
     }
