@@ -10,6 +10,10 @@ namespace SmartMouse
         {
             InitializeComponent();
             instance = this;
+            if (instance != null)
+            {
+                instance.label6.Text = Server.getIP();
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)

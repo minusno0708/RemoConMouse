@@ -9,6 +9,20 @@ namespace SmartMouse
     {
         private static int port = 11000;
 
+        public static string getIP()
+        {
+            string result = "";
+            string hostname = Dns.GetHostName();
+            IPAddress[] adrList = Dns.GetHostAddresses(hostname);
+            foreach (IPAddress address in adrList)
+            {
+                if (address.AddressFamily == AddressFamily.InterNetwork)
+                    result += address.ToString() + "\n";
+            }
+
+            return result;
+        }
+
         public static async void Start()
         {
             UdpClient listener = new UdpClient(port);
@@ -54,11 +68,6 @@ namespace SmartMouse
                 }
                 catch {}
             }
-
-        }
-
-        private static void OpenPort(int port)
-        {
 
         }
 

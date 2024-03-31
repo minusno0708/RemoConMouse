@@ -38,6 +38,8 @@
             label4 = new Label();
             textBox3 = new TextBox();
             button3 = new Button();
+            label5 = new Label();
+            label6 = new Label();
             SuspendLayout();
             // 
             // textBox1
@@ -110,8 +112,9 @@
             label4.AutoSize = true;
             label4.Location = new Point(292, 175);
             label4.Name = "label4";
-            label4.Size = new Size(0, 15);
+            label4.Size = new Size(27, 15);
             label4.TabIndex = 7;
+            label4.Text = "Log";
             // 
             // textBox3
             // 
@@ -130,11 +133,31 @@
             button3.UseVisualStyleBackColor = true;
             button3.Click += button3_Click;
             // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(379, 48);
+            label5.Name = "label5";
+            label5.Size = new Size(17, 15);
+            label5.TabIndex = 10;
+            label5.Text = "IP";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(416, 48);
+            label6.Name = "label6";
+            label6.Size = new Size(17, 15);
+            label6.TabIndex = 11;
+            label6.Text = "IP";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(label6);
+            Controls.Add(label5);
             Controls.Add(button3);
             Controls.Add(textBox3);
             Controls.Add(label4);
@@ -164,5 +187,7 @@
         private Label label4;
         private TextBox textBox3;
         private Button button3;
+        private Label label5;
+        private Label label6;
     }
 }
