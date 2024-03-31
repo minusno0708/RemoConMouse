@@ -25,6 +25,10 @@ namespace SmartMouse
 
         public static async void Start()
         {
+            var tcpSocket = new Socket(SocketType.Stream, ProtocolType.Tcp);
+            var tcpLocal = new IPEndPoint(IPAddress.Any, port);
+            tcpSocket.Bind(tcpLocal);
+
             var udpSocket = new Socket(SocketType.Dgram, ProtocolType.Udp);
             var udpLocal = new IPEndPoint(IPAddress.Any, port);
             udpSocket.Bind(udpLocal);
@@ -37,6 +41,13 @@ namespace SmartMouse
                 {
                     while (true)
                     {
+                        tcpSocket.Listen(1);
+                        var tcpClient = tcpSocket.Accept();
+                        byte[] tcpBuffer = new byte[1024];
+                        var tcpLength = tcpClient.Receive(tcpBuffer);
+                        string tcpData = Encoding.UTF8.GetString(tcpBuffer, 0, tcpLength);
+                        Form1.updateLog($"Received Message is {tcpData}");
+
                         byte[] udpBuffer = new byte[512];
                         EndPoint udpRemote = new IPEndPoint(IPAddress.Any, port);
                         var udpLength = udpSocket.ReceiveFrom(udpBuffer, ref udpRemote);
@@ -53,6 +64,7 @@ namespace SmartMouse
             }
             finally
             {
+                tcpSocket.Close();
                 udpSocket.Close();
             }
             
@@ -64,7 +76,7 @@ namespace SmartMouse
 
             if (commands[0] == "connect") 
             {
-                Send(commands[1], "server connected");
+                SendUdp(commands[1], "server connected");
             }
             else if (commands[0] == "move")
             {
@@ -80,7 +92,21 @@ namespace SmartMouse
 
         }
 
-        public static void Send(string ip, string message)
+        public static void SendTcp(string ip, string message)
+        {
+            Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+            IPAddress broadcast = IPAddress.Parse(ip);
+
+            byte[] sendbuf = Encoding.ASCII.GetBytes(message);
+            IPEndPoint ep = new IPEndPoint(broadcast, 11000);
+
+            s.Connect(ep);
+            s.Send(sendbuf);
+            s.Close();
+        }
+
+        public static void SendUdp(string ip, string message)
         {
             Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
@@ -90,6 +116,7 @@ namespace SmartMouse
             IPEndPoint ep = new IPEndPoint(broadcast, 11000);
 
             s.SendTo(sendbuf, ep);
+            s.Close();
         }
     }
 }

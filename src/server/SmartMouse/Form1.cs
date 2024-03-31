@@ -45,7 +45,7 @@ namespace SmartMouse
 
         private void button3_Click(object sender, EventArgs e)
         {
-            Server.Send("192.168.11.64", textBox3.Text);
+            Server.SendTcp("192.168.11.64", textBox3.Text);
         }
 
         public static void updateLog(string newLogText)
