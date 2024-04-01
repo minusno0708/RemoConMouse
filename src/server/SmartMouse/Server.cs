@@ -33,23 +33,31 @@ namespace SmartMouse
             var udpLocal = new IPEndPoint(IPAddress.Any, port);
             udpSocket.Bind(udpLocal);
 
-            Form1.updateLog($"UDP Server has started on {port} Waiting for a connection");
+            Form1.updateLog($"Server has started on {port} Waiting for a connection");
 
             try
-            { 
-                await Task.Run(async () =>
+            {
+                tcpSocket.Listen(1);
+                Task tcpTask = Task.Run(async () =>
                 {
                     while (true)
                     {
-                        string data;
-                        data = TcpListener(tcpSocket);
-                        Form1.updateLog($"Received Message is {data}");
-
-                        data = UdpListener(udpSocket);
-                        Form1.updateLog($"Received Message is {data}");
-                        CallController(data);
+                        string tcpData = await TcpListenerAsync(tcpSocket);
+                        Form1.updateLog($"Received Message is {tcpData}");
+                        CallController(tcpData);
                     }
                 });
+                Task udpTask = Task.Run(async () =>
+                {
+                    while (true)
+                    {
+                        string udpData = await UdpListenerAsync(udpSocket);
+                        Form1.updateLog($"Received Message is {udpData}");
+                        CallController(udpData);
+                    }
+                });
+
+                await Task.WhenAll(tcpTask, udpTask);
                 
             }
             catch (Exception e)
@@ -64,22 +72,21 @@ namespace SmartMouse
             
         }
 
-        private static string TcpListener(Socket socket)
+        private static async Task<string> TcpListenerAsync(Socket socket)
         {
-            socket.Listen(1);
-            var client = socket.Accept();
+            var client = await socket.AcceptAsync();
             byte[] buffer = new byte[512];
-            var length = client.Receive(buffer);
+            var length = await client.ReceiveAsync(buffer, SocketFlags.None);
             string data = Encoding.UTF8.GetString(buffer, 0, length);
 
             return data;
         }
 
-        private static string UdpListener(Socket socket)
+        private static async Task<string> UdpListenerAsync(Socket socket)
         {
             byte[] buffer = new byte[512];
             EndPoint remote = new IPEndPoint(IPAddress.Any, port);
-            var length = socket.ReceiveFrom(buffer, ref remote);
+            var length = await socket.ReceiveAsync(buffer, SocketFlags.None);
             string data = Encoding.UTF8.GetString(buffer);
 
             return data;
@@ -91,7 +98,7 @@ namespace SmartMouse
 
             if (commands[0] == "connect") 
             {
-                SendUdp(commands[1], "server connected");
+                SendTcp(commands[1], "server connected");
             }
             else if (commands[0] == "move")
             {
