@@ -26,11 +26,25 @@ namespace Controller
 
         public static void Click(string button)
         {
-            if (button == "left")
+            switch (button)
             {
-                mouse_event((int)MouseEventFlags.LeftDown, 0, 0, 0, 0);
-                Thread.Sleep(100);
-                mouse_event((int)MouseEventFlags.LeftUp, 0, 0, 0, 0);
+                case "left":
+                    mouse_event((int)MouseEventFlags.LeftDown, 0, 0, 0, 0);
+                    Thread.Sleep(100);
+                    mouse_event((int)MouseEventFlags.LeftUp, 0, 0, 0, 0);
+                    break;
+                case "left-double":
+                    mouse_event((int)MouseEventFlags.LeftDown, 0, 0, 0, 0);
+                    Thread.Sleep(100);
+                    mouse_event((int)MouseEventFlags.LeftUp, 0, 0, 0, 0);
+                    Thread.Sleep(100);
+                    mouse_event((int)MouseEventFlags.LeftDown, 0, 0, 0, 0);
+                    Thread.Sleep(100);
+                    mouse_event((int)MouseEventFlags.LeftUp, 0, 0, 0, 0);
+                    break;
+                default:
+                    break;
+
             }
 
         }

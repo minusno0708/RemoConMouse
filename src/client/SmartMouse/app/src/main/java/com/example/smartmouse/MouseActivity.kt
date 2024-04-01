@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.hardware.SensorManager
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import com.example.smartmouse.databinding.ActivityMouseBinding
 import java.util.Timer
@@ -37,8 +39,17 @@ class MouseActivity : AppCompatActivity() {
         binding.mouseSwitch.setOnClickListener {
             switchMouseOnOf()
         }
+        var clickCounter: Int = 0
         binding.clickButton.setOnClickListener {
-            mouseClick()
+            clickCounter++
+            Handler(Looper.getMainLooper()).postDelayed({
+                if (clickCounter == 1) {
+                    mouseClick("left")
+                } else if (clickCounter > 1) {
+                    mouseClick("left-double")
+                }
+                clickCounter = 0
+            }, 300)
         }
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
@@ -114,9 +125,17 @@ class MouseActivity : AppCompatActivity() {
         timer.cancel()
     }
 
-    private fun mouseClick() {
+    private fun mouseClick(type: String) {
+        val command = when (type) {
+            "left" -> "click,left"
+            "right" -> "click,right"
+            "left-double" -> "click,left-double"
+            "right-double" -> "click,right-double"
+            else -> ""
+        }
+
         Thread {
-            serverManager.sendTcp("click,left")
+            serverManager.sendTcp(command)
         }.start()
     }
 
