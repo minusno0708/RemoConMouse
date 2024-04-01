@@ -28,8 +28,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun toMouse() {
-        serverManager.connect(binding.inputIp.text.toString(), 11000)
-        if (serverManager.isConnect) {
+        val isConnected: Boolean = serverManager.connect(binding.inputIp.text.toString(), 11000)
+        if (isConnected) {
             val intent = Intent(this, MouseActivity::class.java)
             startActivity(intent)
         } else {

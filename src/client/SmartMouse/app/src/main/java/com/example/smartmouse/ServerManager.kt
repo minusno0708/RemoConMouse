@@ -13,11 +13,10 @@ class ServerManager {
     private var port: Int = 0
     private var senderPort: Int = 0
 
-    var isConnect: Boolean = false
     private var tcpSocket: Socket? = null
 
     fun connect(ip: String, port: Int, senderPort: Int = 0): Boolean {
-        isConnect = false
+        var isConnected: Boolean = false
 
         this.ip = ip
         this.port = port
@@ -33,10 +32,10 @@ class ServerManager {
         Thread.sleep(1000)
 
         if (message == "ok") {
-            isConnect = true
+            isConnected = true
         }
 
-        return isConnect
+        return isConnected
     }
 
     fun get(): String {
@@ -49,16 +48,13 @@ class ServerManager {
             val writer: PrintWriter = PrintWriter(tcpSocket!!.getOutputStream(), true)
             writer.println(message)
         } catch(e: Exception) {
-            isConnect = false
         }
     }
 
     fun waitTcp(): String {
         val stream = tcpSocket!!.getInputStream()
         val buffer = BufferedReader(InputStreamReader(stream))
-        val received = buffer.readLine()
-
-        return received
+        return buffer.readLine()
     }
 
     fun sendUdp(message: String) {
@@ -69,8 +65,6 @@ class ServerManager {
             val address = InetAddress.getByName(ip)
             val packet = DatagramPacket(data, data.size, address, port)
             udpSocket.send(packet)
-        } catch(e: Exception) {
-            isConnect = false
         }finally {
             udpSocket?.close()
         }
