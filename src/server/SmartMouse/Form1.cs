@@ -1,10 +1,19 @@
+using System.ComponentModel;
+
 namespace SmartMouse
 {
     public partial class Form1 : Form
     {
+        private static Form1? instance;
+
         public Form1()
         {
             InitializeComponent();
+            instance = this;
+            if (instance != null)
+            {
+                instance.label6.Text = Server.getIP();
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -27,6 +36,24 @@ namespace SmartMouse
                 inputY = 0;
             }
             Controller.Mouse.Move(inputX, inputY);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Server.Start();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Server.SendTcp("192.168.11.64", textBox3.Text);
+        }
+
+        public static void updateLog(string newLogText)
+        {
+            if (instance != null)
+            {
+                instance.label4.Text = newLogText;   
+            }
         }
     }
 }
