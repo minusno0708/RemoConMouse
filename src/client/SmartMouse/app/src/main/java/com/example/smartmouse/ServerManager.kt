@@ -1,5 +1,7 @@
 package com.example.smartmouse
 
+import java.io.PrintWriter
+import java.net.Socket
 import java.net.DatagramPacket
 import java.net.DatagramSocket
 import java.net.InetAddress
@@ -17,7 +19,7 @@ class ServerManager {
         this.senderPort = senderPort
 
         Thread {
-            send("".toByteArray())
+            sendTcp("tcp connection")
         }.start()
 
         return isConnect
@@ -27,7 +29,22 @@ class ServerManager {
         return "${this.ip}:${this.port}"
     }
 
-    fun send(data: ByteArray) {
+    fun sendTcp(message: String) {
+        var socket: Socket? = null
+        try {
+            socket = Socket(ip, port)
+            val writer: PrintWriter = PrintWriter(socket.getOutputStream(), true)
+            writer.println(message)
+            isConnect = true
+        } catch (e: Exception) {
+            isConnect = false
+        } finally {
+            socket?.close()
+        }
+    }
+
+    fun sendUdp(message: String) {
+        val data = message.toByteArray()
         var socket: DatagramSocket? = null
         try {
             socket = DatagramSocket(senderPort)

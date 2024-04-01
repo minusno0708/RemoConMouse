@@ -43,7 +43,7 @@ namespace SmartMouse
                     while (true)
                     {
                         string tcpData = await TcpListenerAsync(tcpSocket);
-                        Form1.updateLog($"Received Message is {tcpData}");
+                        Form1.updateLog($"TCP Received Message is {tcpData}");
                         CallController(tcpData);
                     }
                 });
@@ -52,7 +52,7 @@ namespace SmartMouse
                     while (true)
                     {
                         string udpData = await UdpListenerAsync(udpSocket);
-                        Form1.updateLog($"Received Message is {udpData}");
+                        Form1.updateLog($"UDP Received Message is {udpData}");
                         CallController(udpData);
                     }
                 });
