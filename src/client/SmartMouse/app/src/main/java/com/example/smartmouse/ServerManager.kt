@@ -23,10 +23,18 @@ class ServerManager {
         this.port = port
         this.senderPort = senderPort
 
+        var message = ""
+
         Thread {
             sendTcp("tcp connection")
-            waitTcp()
+            message = waitTcp()
         }.start()
+
+        Thread.sleep(1000)
+
+        if (message == "ok") {
+            isConnect = true
+        }
 
         return isConnect
     }
@@ -40,9 +48,8 @@ class ServerManager {
             tcpSocket = Socket(ip, port)
             val writer: PrintWriter = PrintWriter(tcpSocket!!.getOutputStream(), true)
             writer.println(message)
-            isConnect = true
-        } finally {
-
+        } catch(e: Exception) {
+            isConnect = false
         }
     }
 
@@ -50,7 +57,6 @@ class ServerManager {
         val stream = tcpSocket!!.getInputStream()
         val buffer = BufferedReader(InputStreamReader(stream))
         val received = buffer.readLine()
-        isConnect = true
 
         return received
     }
@@ -63,7 +69,9 @@ class ServerManager {
             val address = InetAddress.getByName(ip)
             val packet = DatagramPacket(data, data.size, address, port)
             udpSocket.send(packet)
-        } finally {
+        } catch(e: Exception) {
+            isConnect = false
+        }finally {
             udpSocket?.close()
         }
     }

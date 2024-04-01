@@ -24,12 +24,11 @@ class MainActivity : AppCompatActivity() {
             toMouse()
         }
 
-        updateLog(serverManager.isConnect.toString())
+        updateLog("log")
     }
 
     private fun toMouse() {
         serverManager.connect(binding.inputIp.text.toString(), 11000)
-        Thread.sleep(100)
         if (serverManager.isConnect) {
             val intent = Intent(this, MouseActivity::class.java)
             startActivity(intent)
