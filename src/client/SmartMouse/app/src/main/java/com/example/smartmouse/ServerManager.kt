@@ -1,5 +1,7 @@
 package com.example.smartmouse
 
+import java.io.BufferedReader
+import java.io.InputStreamReader
 import java.io.PrintWriter
 import java.net.Socket
 import java.net.DatagramPacket
@@ -12,14 +14,18 @@ class ServerManager {
     private var senderPort: Int = 0
 
     var isConnect: Boolean = false
+    private var tcpSocket: Socket? = null
 
     fun connect(ip: String, port: Int, senderPort: Int = 0): Boolean {
+        isConnect = false
+
         this.ip = ip
         this.port = port
         this.senderPort = senderPort
 
         Thread {
             sendTcp("tcp connection")
+            waitTcp()
         }.start()
 
         return isConnect
@@ -30,32 +36,35 @@ class ServerManager {
     }
 
     fun sendTcp(message: String) {
-        var socket: Socket? = null
         try {
-            socket = Socket(ip, port)
-            val writer: PrintWriter = PrintWriter(socket.getOutputStream(), true)
+            tcpSocket = Socket(ip, port)
+            val writer: PrintWriter = PrintWriter(tcpSocket!!.getOutputStream(), true)
             writer.println(message)
             isConnect = true
-        } catch (e: Exception) {
-            isConnect = false
         } finally {
-            socket?.close()
+
         }
+    }
+
+    fun waitTcp(): String {
+        val stream = tcpSocket!!.getInputStream()
+        val buffer = BufferedReader(InputStreamReader(stream))
+        val received = buffer.readLine()
+        isConnect = true
+
+        return received
     }
 
     fun sendUdp(message: String) {
         val data = message.toByteArray()
-        var socket: DatagramSocket? = null
+        var udpSocket: DatagramSocket? = null
         try {
-            socket = DatagramSocket(senderPort)
+            udpSocket = DatagramSocket(senderPort)
             val address = InetAddress.getByName(ip)
             val packet = DatagramPacket(data, data.size, address, port)
-            socket.send(packet)
-            isConnect = true
-        } catch (e: Exception) {
-            isConnect = false
+            udpSocket.send(packet)
         } finally {
-            socket?.close()
+            udpSocket?.close()
         }
     }
 }
