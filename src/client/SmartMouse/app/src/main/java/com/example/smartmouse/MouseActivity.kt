@@ -115,7 +115,9 @@ class MouseActivity : AppCompatActivity() {
     }
 
     private fun mouseClick() {
-        updateLog("clicked")
+        Thread {
+            serverManager.sendTcp("click,left")
+        }.start()
     }
 
 }
