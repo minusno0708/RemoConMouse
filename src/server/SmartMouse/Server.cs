@@ -79,6 +79,11 @@ namespace SmartMouse
             var length = await client.ReceiveAsync(buffer, SocketFlags.None);
             string data = Encoding.UTF8.GetString(buffer, 0, length);
 
+            byte[] message = Encoding.UTF8.GetBytes("ok");
+            client.Send(message);
+
+            client.Close();
+
             return data;
         }
 
