@@ -99,13 +99,10 @@ namespace SmartMouse
 
         private static void CallController(string message)
         {
+            message = message.Replace("\n", "");
             string[] commands = message.Split(",");
 
-            if (commands[0] == "connect") 
-            {
-                SendTcp(commands[1], "server connected");
-            }
-            else if (commands[0] == "move")
+            if (commands[0] == "move")
             {
                 int inputX, inputY;
                 try
@@ -115,6 +112,10 @@ namespace SmartMouse
                     Controller.Mouse.Move(inputX, inputY);
                 }
                 catch {}
+            }
+            else if (commands[0] == "click")
+            {
+                Controller.Mouse.Click(commands[1]);
             }
 
         }
