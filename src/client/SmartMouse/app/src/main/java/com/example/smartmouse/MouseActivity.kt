@@ -37,6 +37,9 @@ class MouseActivity : AppCompatActivity() {
         binding.mouseSwitch.setOnClickListener {
             switchMouseOnOf()
         }
+        binding.clickButton.setOnClickListener {
+            mouseClick()
+        }
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
@@ -109,6 +112,10 @@ class MouseActivity : AppCompatActivity() {
 
     private fun mouseDisable() {
         timer.cancel()
+    }
+
+    private fun mouseClick() {
+        updateLog("clicked")
     }
 
 }
