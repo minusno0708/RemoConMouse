@@ -140,7 +140,7 @@ class MouseActivity : AppCompatActivity() {
         }
 
         Thread {
-            serverManager.sendTcp(command)
+            serverManager.sendUdp(command)
         }.start()
     }
 
