@@ -16,7 +16,7 @@ class ServerManager {
     private var tcpSocket: Socket? = null
 
     fun connect(ip: String, port: Int, senderPort: Int = 0): Boolean {
-        var isConnected: Boolean = false
+        var isConnected = false
 
         this.ip = ip
         this.port = port
@@ -45,13 +45,13 @@ class ServerManager {
     fun sendTcp(message: String) {
         try {
             tcpSocket = Socket(ip, port)
-            val writer: PrintWriter = PrintWriter(tcpSocket!!.getOutputStream(), true)
+            val writer = PrintWriter(tcpSocket!!.getOutputStream(), true)
             writer.println(message)
-        } catch(e: Exception) {
+        } catch(_: Exception) {
         }
     }
 
-    fun waitTcp(): String {
+    private fun waitTcp(): String {
         val stream = tcpSocket!!.getInputStream()
         val buffer = BufferedReader(InputStreamReader(stream))
         return buffer.readLine()

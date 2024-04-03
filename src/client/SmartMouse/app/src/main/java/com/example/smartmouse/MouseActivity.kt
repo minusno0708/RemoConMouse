@@ -1,11 +1,11 @@
 package com.example.smartmouse
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.hardware.SensorManager
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
 import com.example.smartmouse.databinding.ActivityMouseBinding
 import java.util.Timer
@@ -21,13 +21,15 @@ class MouseActivity : AppCompatActivity() {
     private lateinit var accelerometerListener: MouseActivity.AccelerometerListener
 
     private val serverManager = ServerData.serverManager
-    private var timer = Timer()
+    private var moveTimer = Timer()
+    private var scrollTimer = Timer()
 
     private var gyroValues: FloatArray = floatArrayOf(0f, 0f, 0f)
     private var accValues: FloatArray = floatArrayOf(0f, 0f, 0f)
 
     private var isMouseOn = false
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMouseBinding.inflate(layoutInflater)
@@ -39,31 +41,74 @@ class MouseActivity : AppCompatActivity() {
         binding.mouseSwitch.setOnClickListener {
             switchMouseOnOf()
         }
-        var clickCounter: Int = 0
-        binding.leftClick.setOnClickListener {
-            clickCounter++
-            Handler(Looper.getMainLooper()).postDelayed({
-                if (clickCounter == 1) {
-                    mouseClick("left")
-                } else if (clickCounter > 1) {
-                    mouseClick("left-double")
+
+        binding.leftClick.setOnTouchListener { _, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    mouseClick("left-down")
+                    true
                 }
-                clickCounter = 0
-            }, 300)
-        }
-        binding.rightClick.setOnClickListener {
-            clickCounter++
-            Handler(Looper.getMainLooper()).postDelayed({
-                if (clickCounter == 1) {
-                    mouseClick("right")
-                } else if (clickCounter > 1) {
-                    mouseClick("right-double")
+                MotionEvent.ACTION_UP -> {
+                    mouseClick("left-up")
+                    true
                 }
-                clickCounter = 0
-            }, 300)
+                else -> false
+            }
         }
-        binding.middleClick.setOnClickListener {
-            mouseClick("middle")
+        binding.rightClick.setOnTouchListener { _, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    mouseClick("right-down")
+                    true
+                }
+                MotionEvent.ACTION_UP -> {
+                    mouseClick("right-up")
+                    true
+                }
+                else -> false
+            }
+        }
+        binding.middleClick.setOnTouchListener { _, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    mouseClick("middle-down")
+                    true
+                }
+
+                MotionEvent.ACTION_UP -> {
+                    mouseClick("middle-up")
+                    true
+                }
+
+                else -> false
+            }
+        }
+
+        binding.scrollUp.setOnTouchListener { _, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    onMouseScroll("up")
+                    true
+                }
+                MotionEvent.ACTION_UP -> {
+                    offMouseScroll()
+                    true
+                }
+                else -> false
+            }
+        }
+        binding.scrollDown.setOnTouchListener { _, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    onMouseScroll("down")
+                    true
+                }
+                MotionEvent.ACTION_UP -> {
+                    offMouseScroll()
+                    true
+                }
+                else -> false
+            }
         }
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
@@ -96,8 +141,8 @@ class MouseActivity : AppCompatActivity() {
     }
 
     private fun mouseEnable() {
-        timer = Timer()
-        timer.schedule(0, 100) {
+        moveTimer = Timer()
+        moveTimer.schedule(0, 100) {
             val moveX: Int = (-gyroValues[2]*100).toInt()
             val moveY: Int = (-gyroValues[0]*100).toInt()
 
@@ -108,22 +153,37 @@ class MouseActivity : AppCompatActivity() {
     }
 
     private fun mouseDisable() {
-        timer.cancel()
+        moveTimer.cancel()
     }
 
     private fun mouseClick(type: String) {
-        val command = when (type) {
-            "left" -> "click,left"
-            "right" -> "click,right"
-            "left-double" -> "click,left-double"
-            "right-double" -> "click,right-double"
-            "middle" -> "click,middle"
-            else -> ""
-        }
+        val command = "click,$type"
 
         Thread {
             serverManager.sendTcp(command)
         }.start()
+    }
+
+    private fun onMouseScroll(type: String) {
+        try {
+            scrollTimer.cancel()
+        } catch (_: Exception) {
+
+        }
+
+        scrollTimer = Timer()
+
+        val command = "scroll,$type"
+
+        scrollTimer.schedule(0, 100) {
+            Thread {
+                serverManager.sendUdp(command)
+            }.start()
+        }
+    }
+
+    private fun offMouseScroll() {
+        scrollTimer.cancel()
     }
 
     private fun updateLog(message: String) {

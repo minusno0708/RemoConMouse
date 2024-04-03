@@ -99,7 +99,7 @@ namespace SmartMouse
 
         private static void CallController(string message)
         {
-            message = message.Replace("\n", "");
+            message = message.Replace("\n", "").Replace("\0", "");
             string[] commands = message.Split(",");
 
             if (commands[0] == "move")
@@ -116,6 +116,10 @@ namespace SmartMouse
             else if (commands[0] == "click")
             {
                 Controller.Mouse.Click(commands[1]);
+            }
+            else if (commands[0] == "scroll")
+            {
+                Controller.Mouse.Scroll(commands[1]);
             }
 
         }
