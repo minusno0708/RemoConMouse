@@ -1,4 +1,5 @@
 
+using SmartMouse;
 using System.Runtime.InteropServices;
 using System.Threading;
 
@@ -14,7 +15,9 @@ namespace Controller
             LeftDown = 0x02,
             LeftUp = 0x04,
             RightDown = 0x08,
-            RightUp = 0x10
+            RightUp = 0x10,
+            MiddleDown = 0x20,
+            MiddleUp = 0x40,
         }
 
 
@@ -57,6 +60,11 @@ namespace Controller
                     mouse_event((int)MouseEventFlags.RightDown, 0, 0, 0, 0);
                     Thread.Sleep(100);
                     mouse_event((int)MouseEventFlags.RightUp, 0, 0, 0, 0);
+                    break;
+                case "middle":
+                    mouse_event((int)MouseEventFlags.MiddleDown, 0, 0, 0, 0);
+                    Thread.Sleep(100);
+                    mouse_event((int)MouseEventFlags.MiddleUp, 0, 0, 0, 0);
                     break;
                 default:
                     break;

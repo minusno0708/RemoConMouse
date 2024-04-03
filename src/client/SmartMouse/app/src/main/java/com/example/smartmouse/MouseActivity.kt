@@ -62,6 +62,9 @@ class MouseActivity : AppCompatActivity() {
                 clickCounter = 0
             }, 300)
         }
+        binding.middleClick.setOnClickListener {
+            mouseClick("middle")
+        }
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
@@ -92,6 +95,37 @@ class MouseActivity : AppCompatActivity() {
         }
     }
 
+    private fun mouseEnable() {
+        timer = Timer()
+        timer.schedule(0, 100) {
+            val moveX: Int = (-gyroValues[2]*100).toInt()
+            val moveY: Int = (-gyroValues[0]*100).toInt()
+
+            Thread {
+                serverManager.sendUdp("move,${moveX},${moveY}")
+            }.start()
+        }
+    }
+
+    private fun mouseDisable() {
+        timer.cancel()
+    }
+
+    private fun mouseClick(type: String) {
+        val command = when (type) {
+            "left" -> "click,left"
+            "right" -> "click,right"
+            "left-double" -> "click,left-double"
+            "right-double" -> "click,right-double"
+            "middle" -> "click,middle"
+            else -> ""
+        }
+
+        Thread {
+            serverManager.sendTcp(command)
+        }.start()
+    }
+
     private fun updateLog(message: String) {
         binding.logMessage.text = message
     }
@@ -119,35 +153,4 @@ class MouseActivity : AppCompatActivity() {
         gyroscopeManager.unregisterListener()
         accelerometerManager.unregisterListener()
     }
-
-    private fun mouseEnable() {
-        timer = Timer()
-        timer.schedule(0, 100) {
-            val moveX: Int = (-gyroValues[2]*100).toInt()
-            val moveY: Int = (-gyroValues[0]*100).toInt()
-
-            Thread {
-                serverManager.sendUdp("move,${moveX},${moveY}")
-            }.start()
-        }
-    }
-
-    private fun mouseDisable() {
-        timer.cancel()
-    }
-
-    private fun mouseClick(type: String) {
-        val command = when (type) {
-            "left" -> "click,left"
-            "right" -> "click,right"
-            "left-double" -> "click,left-double"
-            "right-double" -> "click,right-double"
-            else -> ""
-        }
-
-        Thread {
-            serverManager.sendTcp(command)
-        }.start()
-    }
-
 }
