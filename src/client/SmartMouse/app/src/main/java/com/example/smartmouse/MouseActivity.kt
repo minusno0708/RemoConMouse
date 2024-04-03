@@ -5,8 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.hardware.SensorManager
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
 import com.example.smartmouse.databinding.ActivityMouseBinding
@@ -43,8 +41,8 @@ class MouseActivity : AppCompatActivity() {
         binding.mouseSwitch.setOnClickListener {
             switchMouseOnOf()
         }
-        var clickCounter: Int = 0
-        binding.leftClick.setOnTouchListener { view, event ->
+
+        binding.leftClick.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     mouseClick("left-down")
@@ -57,7 +55,7 @@ class MouseActivity : AppCompatActivity() {
                 else -> false
             }
         }
-        binding.rightClick.setOnTouchListener { view, event ->
+        binding.rightClick.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     mouseClick("right-down")
@@ -70,7 +68,7 @@ class MouseActivity : AppCompatActivity() {
                 else -> false
             }
         }
-        binding.middleClick.setOnTouchListener { view, event ->
+        binding.middleClick.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     mouseClick("middle-down")
@@ -86,7 +84,7 @@ class MouseActivity : AppCompatActivity() {
             }
         }
 
-        binding.scrollUp.setOnTouchListener { view, event ->
+        binding.scrollUp.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     onMouseScroll("up")
@@ -99,7 +97,7 @@ class MouseActivity : AppCompatActivity() {
                 else -> false
             }
         }
-        binding.scrollDown.setOnTouchListener { view, event ->
+        binding.scrollDown.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     onMouseScroll("down")
