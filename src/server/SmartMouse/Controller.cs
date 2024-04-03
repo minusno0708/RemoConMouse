@@ -34,37 +34,22 @@ namespace Controller
         {
             switch (button)
             {
-                case "left":
+                case "left-down":
                     mouse_event((int)MouseEventFlags.LeftDown, 0, 0, 0, 0);
-                    Thread.Sleep(100);
+                    break;
+                case "left-up":
                     mouse_event((int)MouseEventFlags.LeftUp, 0, 0, 0, 0);
                     break;
-                case "left-double":
-                    mouse_event((int)MouseEventFlags.LeftDown, 0, 0, 0, 0);
-                    Thread.Sleep(100);
-                    mouse_event((int)MouseEventFlags.LeftUp, 0, 0, 0, 0);
-                    Thread.Sleep(100);
-                    mouse_event((int)MouseEventFlags.LeftDown, 0, 0, 0, 0);
-                    Thread.Sleep(100);
-                    mouse_event((int)MouseEventFlags.LeftUp, 0, 0, 0, 0);
-                    break;
-                case "right":
+                case "right-down":
                     mouse_event((int)MouseEventFlags.RightDown, 0, 0, 0, 0);
-                    Thread.Sleep(100);
+                    break;
+                case "right-up":
                     mouse_event((int)MouseEventFlags.RightUp, 0, 0, 0, 0);
                     break;
-                case "right-double":
-                    mouse_event((int)MouseEventFlags.RightDown, 0, 0, 0, 0);
-                    Thread.Sleep(100);
-                    mouse_event((int)MouseEventFlags.RightUp, 0, 0, 0, 0);
-                    Thread.Sleep(100);
-                    mouse_event((int)MouseEventFlags.RightDown, 0, 0, 0, 0);
-                    Thread.Sleep(100);
-                    mouse_event((int)MouseEventFlags.RightUp, 0, 0, 0, 0);
-                    break;
-                case "middle":
+                case "middle-down":
                     mouse_event((int)MouseEventFlags.MiddleDown, 0, 0, 0, 0);
-                    Thread.Sleep(100);
+                    break;
+                case "middle-up":
                     mouse_event((int)MouseEventFlags.MiddleUp, 0, 0, 0, 0);
                     break;
                 default:

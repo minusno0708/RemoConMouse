@@ -44,30 +44,46 @@ class MouseActivity : AppCompatActivity() {
             switchMouseOnOf()
         }
         var clickCounter: Int = 0
-        binding.leftClick.setOnClickListener {
-            clickCounter++
-            Handler(Looper.getMainLooper()).postDelayed({
-                if (clickCounter == 1) {
-                    mouseClick("left")
-                } else if (clickCounter > 1) {
-                    mouseClick("left-double")
+        binding.leftClick.setOnTouchListener { view, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    mouseClick("left-down")
+                    true
                 }
-                clickCounter = 0
-            }, 300)
-        }
-        binding.rightClick.setOnClickListener {
-            clickCounter++
-            Handler(Looper.getMainLooper()).postDelayed({
-                if (clickCounter == 1) {
-                    mouseClick("right")
-                } else if (clickCounter > 1) {
-                    mouseClick("right-double")
+                MotionEvent.ACTION_UP -> {
+                    mouseClick("left-up")
+                    true
                 }
-                clickCounter = 0
-            }, 300)
+                else -> false
+            }
         }
-        binding.middleClick.setOnClickListener {
-            mouseClick("middle")
+        binding.rightClick.setOnTouchListener { view, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    mouseClick("right-down")
+                    true
+                }
+                MotionEvent.ACTION_UP -> {
+                    mouseClick("right-up")
+                    true
+                }
+                else -> false
+            }
+        }
+        binding.middleClick.setOnTouchListener { view, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    mouseClick("middle-down")
+                    true
+                }
+
+                MotionEvent.ACTION_UP -> {
+                    mouseClick("middle-up")
+                    true
+                }
+
+                else -> false
+            }
         }
 
         binding.scrollUp.setOnTouchListener { view, event ->
@@ -143,14 +159,7 @@ class MouseActivity : AppCompatActivity() {
     }
 
     private fun mouseClick(type: String) {
-        val command = when (type) {
-            "left" -> "click,left"
-            "right" -> "click,right"
-            "left-double" -> "click,left-double"
-            "right-double" -> "click,right-double"
-            "middle" -> "click,middle"
-            else -> ""
-        }
+        val command = "click,$type"
 
         Thread {
             serverManager.sendTcp(command)
@@ -160,11 +169,7 @@ class MouseActivity : AppCompatActivity() {
     private fun onMouseScroll(type: String) {
         scrollTimer = Timer()
 
-        val command = when (type) {
-            "up" -> "scroll,up"
-            "down" -> "scroll,down"
-            else -> ""
-        }
+        val command = "scroll,$type"
 
         scrollTimer.schedule(0, 100) {
             Thread {
