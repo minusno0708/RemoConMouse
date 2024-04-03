@@ -1,11 +1,13 @@
 package com.example.smartmouse
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.hardware.SensorManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
 import com.example.smartmouse.databinding.ActivityMouseBinding
 import java.util.Timer
@@ -21,13 +23,15 @@ class MouseActivity : AppCompatActivity() {
     private lateinit var accelerometerListener: MouseActivity.AccelerometerListener
 
     private val serverManager = ServerData.serverManager
-    private var timer = Timer()
+    private var moveTimer = Timer()
+    private var scrollTimer = Timer()
 
     private var gyroValues: FloatArray = floatArrayOf(0f, 0f, 0f)
     private var accValues: FloatArray = floatArrayOf(0f, 0f, 0f)
 
     private var isMouseOn = false
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMouseBinding.inflate(layoutInflater)
@@ -65,11 +69,32 @@ class MouseActivity : AppCompatActivity() {
         binding.middleClick.setOnClickListener {
             mouseClick("middle")
         }
-        binding.scrollUp.setOnClickListener {
-            mouseScroll("up")
+
+        binding.scrollUp.setOnTouchListener { view, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    onMouseScroll("up")
+                    true
+                }
+                MotionEvent.ACTION_UP -> {
+                    offMouseScroll()
+                    true
+                }
+                else -> false
+            }
         }
-        binding.scrollDown.setOnClickListener {
-            mouseScroll("down")
+        binding.scrollDown.setOnTouchListener { view, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    onMouseScroll("down")
+                    true
+                }
+                MotionEvent.ACTION_UP -> {
+                    offMouseScroll()
+                    true
+                }
+                else -> false
+            }
         }
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
@@ -102,8 +127,8 @@ class MouseActivity : AppCompatActivity() {
     }
 
     private fun mouseEnable() {
-        timer = Timer()
-        timer.schedule(0, 100) {
+        moveTimer = Timer()
+        moveTimer.schedule(0, 100) {
             val moveX: Int = (-gyroValues[2]*100).toInt()
             val moveY: Int = (-gyroValues[0]*100).toInt()
 
@@ -114,7 +139,7 @@ class MouseActivity : AppCompatActivity() {
     }
 
     private fun mouseDisable() {
-        timer.cancel()
+        moveTimer.cancel()
     }
 
     private fun mouseClick(type: String) {
@@ -132,16 +157,24 @@ class MouseActivity : AppCompatActivity() {
         }.start()
     }
 
-    private fun mouseScroll(type: String) {
+    private fun onMouseScroll(type: String) {
+        scrollTimer = Timer()
+
         val command = when (type) {
             "up" -> "scroll,up"
             "down" -> "scroll,down"
             else -> ""
         }
 
-        Thread {
-            serverManager.sendUdp(command)
-        }.start()
+        scrollTimer.schedule(0, 100) {
+            Thread {
+                serverManager.sendUdp(command)
+            }.start()
+        }
+    }
+
+    private fun offMouseScroll() {
+        scrollTimer.cancel()
     }
 
     private fun updateLog(message: String) {
