@@ -12,7 +12,9 @@ namespace Controller
         private enum MouseEventFlags
         {
             LeftDown = 0x02,
-            LeftUp = 0x04
+            LeftUp = 0x04,
+            RightDown = 0x08,
+            RightUp = 0x10
         }
 
 
@@ -41,6 +43,20 @@ namespace Controller
                     mouse_event((int)MouseEventFlags.LeftDown, 0, 0, 0, 0);
                     Thread.Sleep(100);
                     mouse_event((int)MouseEventFlags.LeftUp, 0, 0, 0, 0);
+                    break;
+                case "right":
+                    mouse_event((int)MouseEventFlags.RightDown, 0, 0, 0, 0);
+                    Thread.Sleep(100);
+                    mouse_event((int)MouseEventFlags.RightUp, 0, 0, 0, 0);
+                    break;
+                case "right-double":
+                    mouse_event((int)MouseEventFlags.RightDown, 0, 0, 0, 0);
+                    Thread.Sleep(100);
+                    mouse_event((int)MouseEventFlags.RightUp, 0, 0, 0, 0);
+                    Thread.Sleep(100);
+                    mouse_event((int)MouseEventFlags.RightDown, 0, 0, 0, 0);
+                    Thread.Sleep(100);
+                    mouse_event((int)MouseEventFlags.RightUp, 0, 0, 0, 0);
                     break;
                 default:
                     break;

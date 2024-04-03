@@ -40,13 +40,24 @@ class MouseActivity : AppCompatActivity() {
             switchMouseOnOf()
         }
         var clickCounter: Int = 0
-        binding.clickButton.setOnClickListener {
+        binding.leftClick.setOnClickListener {
             clickCounter++
             Handler(Looper.getMainLooper()).postDelayed({
                 if (clickCounter == 1) {
                     mouseClick("left")
                 } else if (clickCounter > 1) {
                     mouseClick("left-double")
+                }
+                clickCounter = 0
+            }, 300)
+        }
+        binding.rightClick.setOnClickListener {
+            clickCounter++
+            Handler(Looper.getMainLooper()).postDelayed({
+                if (clickCounter == 1) {
+                    mouseClick("right")
+                } else if (clickCounter > 1) {
+                    mouseClick("right-double")
                 }
                 clickCounter = 0
             }, 300)
