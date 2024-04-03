@@ -165,6 +165,12 @@ class MouseActivity : AppCompatActivity() {
     }
 
     private fun onMouseScroll(type: String) {
+        try {
+            scrollTimer.cancel()
+        } catch (_: Exception) {
+
+        }
+
         scrollTimer = Timer()
 
         val command = "scroll,$type"
