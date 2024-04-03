@@ -65,6 +65,12 @@ class MouseActivity : AppCompatActivity() {
         binding.middleClick.setOnClickListener {
             mouseClick("middle")
         }
+        binding.scrollUp.setOnClickListener {
+            mouseScroll("up")
+        }
+        binding.scrollDown.setOnClickListener {
+            mouseScroll("down")
+        }
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
@@ -118,6 +124,18 @@ class MouseActivity : AppCompatActivity() {
             "left-double" -> "click,left-double"
             "right-double" -> "click,right-double"
             "middle" -> "click,middle"
+            else -> ""
+        }
+
+        Thread {
+            serverManager.sendTcp(command)
+        }.start()
+    }
+
+    private fun mouseScroll(type: String) {
+        val command = when (type) {
+            "up" -> "scroll,up"
+            "down" -> "scroll,down"
             else -> ""
         }
 

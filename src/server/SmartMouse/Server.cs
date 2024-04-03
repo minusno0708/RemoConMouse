@@ -117,6 +117,10 @@ namespace SmartMouse
             {
                 Controller.Mouse.Click(commands[1]);
             }
+            else if (commands[0] == "scroll")
+            {
+                Controller.Mouse.Scroll(commands[1]);
+            }
 
         }
 

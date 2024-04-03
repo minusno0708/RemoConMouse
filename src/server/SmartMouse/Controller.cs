@@ -18,6 +18,7 @@ namespace Controller
             RightUp = 0x10,
             MiddleDown = 0x20,
             MiddleUp = 0x40,
+            Wheel = 0x800,
         }
 
 
@@ -70,7 +71,22 @@ namespace Controller
                     break;
 
             }
-
         }
+
+        public static void Scroll(string direction)
+        {
+            switch (direction)
+            {
+                case "up":
+                    mouse_event((int)MouseEventFlags.Wheel, 0, 0, 10, 0);
+                    break;
+                case "down":
+                    mouse_event((int)MouseEventFlags.Wheel, 0, 0, -10, 0);
+                    break;
+                default:
+                    break;
+            }
+        }
+
     }
 }
