@@ -78,10 +78,10 @@ namespace Controller
             switch (direction)
             {
                 case "up":
-                    mouse_event((int)MouseEventFlags.Wheel, 0, 0, 10, 0);
+                    mouse_event((int)MouseEventFlags.Wheel, 0, 0, 50, 0);
                     break;
                 case "down":
-                    mouse_event((int)MouseEventFlags.Wheel, 0, 0, -10, 0);
+                    mouse_event((int)MouseEventFlags.Wheel, 0, 0, -50, 0);
                     break;
                 default:
                     break;
