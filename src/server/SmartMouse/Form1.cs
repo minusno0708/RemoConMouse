@@ -21,31 +21,9 @@ namespace SmartMouse
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            int inputX, inputY;
-
-            try
-            {
-                inputX = int.Parse(textBox1.Text);
-                inputY = int.Parse(textBox2.Text);
-            }
-            catch
-            {
-                inputX = 0;
-                inputY = 0;
-            }
-            Controller.Mouse.Move(inputX, inputY);
-        }
-
         private void button2_Click(object sender, EventArgs e)
         {
             Server.Start();
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            Server.SendTcp("192.168.11.64", textBox3.Text);
         }
 
         public static void updateLog(string newLogText)
