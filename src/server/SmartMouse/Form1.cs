@@ -12,7 +12,7 @@ namespace SmartMouse
             instance = this;
             if (instance != null)
             {
-                instance.label6.Text = Server.getIP();
+                instance.ipList.Text = Server.getIP();
             }
         }
 
@@ -30,7 +30,7 @@ namespace SmartMouse
         {
             if (instance != null)
             {
-                instance.label4.Text = newLogText;   
+                instance.serverLog.Text = newLogText;   
             }
         }
     }

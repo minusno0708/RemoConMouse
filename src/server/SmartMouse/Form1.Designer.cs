@@ -28,69 +28,69 @@
         /// </summary>
         private void InitializeComponent()
         {
-            label3 = new Label();
-            button2 = new Button();
-            label4 = new Label();
-            label5 = new Label();
-            label6 = new Label();
+            serverLabel = new Label();
+            serverStartButton = new Button();
+            serverLog = new Label();
+            ipLabel = new Label();
+            ipList = new Label();
             SuspendLayout();
             // 
-            // label3
+            // serverLabel
             // 
-            label3.AutoSize = true;
-            label3.Location = new Point(31, 48);
-            label3.Name = "label3";
-            label3.Size = new Size(39, 15);
-            label3.TabIndex = 5;
-            label3.Text = "Server";
+            serverLabel.AutoSize = true;
+            serverLabel.Location = new Point(31, 48);
+            serverLabel.Name = "serverLabel";
+            serverLabel.Size = new Size(39, 15);
+            serverLabel.TabIndex = 5;
+            serverLabel.Text = "Server";
             // 
-            // button2
+            // serverStartButton
             // 
-            button2.Location = new Point(162, 40);
-            button2.Name = "button2";
-            button2.Size = new Size(75, 23);
-            button2.TabIndex = 6;
-            button2.Text = "Start";
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += button2_Click;
+            serverStartButton.Location = new Point(87, 44);
+            serverStartButton.Name = "serverStartButton";
+            serverStartButton.Size = new Size(75, 23);
+            serverStartButton.TabIndex = 6;
+            serverStartButton.Text = "Start";
+            serverStartButton.UseVisualStyleBackColor = true;
+            serverStartButton.Click += button2_Click;
             // 
-            // label4
+            // serverLog
             // 
-            label4.AutoSize = true;
-            label4.Location = new Point(281, 48);
-            label4.Name = "label4";
-            label4.Size = new Size(27, 15);
-            label4.TabIndex = 7;
-            label4.Text = "Log";
+            serverLog.AutoSize = true;
+            serverLog.Location = new Point(191, 48);
+            serverLog.Name = "serverLog";
+            serverLog.Size = new Size(27, 15);
+            serverLog.TabIndex = 7;
+            serverLog.Text = "Log";
             // 
-            // label5
+            // ipLabel
             // 
-            label5.AutoSize = true;
-            label5.Location = new Point(33, 100);
-            label5.Name = "label5";
-            label5.Size = new Size(17, 15);
-            label5.TabIndex = 10;
-            label5.Text = "IP";
+            ipLabel.AutoSize = true;
+            ipLabel.Location = new Point(33, 100);
+            ipLabel.Name = "ipLabel";
+            ipLabel.Size = new Size(17, 15);
+            ipLabel.TabIndex = 10;
+            ipLabel.Text = "IP";
             // 
-            // label6
+            // ipList
             // 
-            label6.AutoSize = true;
-            label6.Location = new Point(70, 100);
-            label6.Name = "label6";
-            label6.Size = new Size(17, 15);
-            label6.TabIndex = 11;
-            label6.Text = "IP";
+            ipList.AutoSize = true;
+            ipList.Location = new Point(70, 100);
+            ipList.Name = "ipList";
+            ipList.Size = new Size(17, 15);
+            ipList.TabIndex = 11;
+            ipList.Text = "0.0.0.0";
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(label6);
-            Controls.Add(label5);
-            Controls.Add(label4);
-            Controls.Add(button2);
-            Controls.Add(label3);
+            Controls.Add(ipList);
+            Controls.Add(ipLabel);
+            Controls.Add(serverLog);
+            Controls.Add(serverStartButton);
+            Controls.Add(serverLabel);
             Name = "Form1";
             Text = "Form1";
             Load += Form1_Load;
@@ -99,10 +99,10 @@
         }
 
         #endregion
-        private Label label3;
-        private Button button2;
-        private Label label4;
-        private Label label5;
-        private Label label6;
+        private Label serverLabel;
+        private Button serverStartButton;
+        private Label serverLog;
+        private Label ipLabel;
+        private Label ipList;
     }
 }
