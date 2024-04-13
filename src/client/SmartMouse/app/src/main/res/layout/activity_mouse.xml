@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Home"
-        app:layout_constraintBottom_toTopOf="@+id/logMessage"
+        app:layout_constraintBottom_toBottomOf="@+id/logMessage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -41,10 +41,9 @@
 
     <Button
         android:id="@+id/leftClick"
-        android:layout_width="120dp"
+        android:layout_width="130dp"
         android:layout_height="200dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="25dp"
         android:background="@drawable/click_button"
         android:text="Left"
         app:backgroundTint="@null"
@@ -55,8 +54,7 @@
         android:id="@+id/rightClick"
         android:layout_width="130dp"
         android:layout_height="200dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="25dp"
         android:background="@drawable/click_button"
         android:text="Right"
         app:backgroundTint="@null"
@@ -72,9 +70,8 @@
         android:text="Middle"
         app:backgroundTint="@null"
         app:layout_constraintBottom_toTopOf="@+id/scrollDown"
-        app:layout_constraintEnd_toStartOf="@+id/rightClick"
-        app:layout_constraintHorizontal_bias="0.681"
-        app:layout_constraintStart_toEndOf="@+id/leftClick" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/scrollUp"
@@ -85,9 +82,8 @@
         android:text="↑"
         app:backgroundTint="@null"
         app:layout_constraintBottom_toTopOf="@+id/middleClick"
-        app:layout_constraintEnd_toStartOf="@+id/rightClick"
-        app:layout_constraintHorizontal_bias="0.636"
-        app:layout_constraintStart_toEndOf="@+id/leftClick" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/scrollDown"
@@ -98,8 +94,7 @@
         android:text="↓"
         app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/rightClick"
-        app:layout_constraintHorizontal_bias="0.636"
-        app:layout_constraintStart_toEndOf="@+id/leftClick" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

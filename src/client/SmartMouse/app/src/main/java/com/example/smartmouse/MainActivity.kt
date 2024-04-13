@@ -1,7 +1,7 @@
 package com.example.smartmouse
 
-import android.os.Bundle
 import android.content.Intent
+import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.smartmouse.databinding.ActivityMainBinding
@@ -23,8 +23,6 @@ class MainActivity : AppCompatActivity() {
         binding.toMouse.setOnClickListener {
             toMouse()
         }
-
-        updateLog("log")
     }
 
     private fun toMouse() {
@@ -36,9 +34,5 @@ class MainActivity : AppCompatActivity() {
             val failedMessage = "接続に失敗しました"
             Toast.makeText(applicationContext, failedMessage, Toast.LENGTH_SHORT).show()
         }
-    }
-
-    private fun updateLog(message: String) {
-        binding.logMessage.text = message
     }
 }
