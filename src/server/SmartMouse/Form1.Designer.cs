@@ -38,7 +38,7 @@
             // serverLabel
             // 
             serverLabel.AutoSize = true;
-            serverLabel.Location = new Point(31, 48);
+            serverLabel.Location = new Point(33, 23);
             serverLabel.Name = "serverLabel";
             serverLabel.Size = new Size(39, 15);
             serverLabel.TabIndex = 5;
@@ -46,7 +46,7 @@
             // 
             // serverStartButton
             // 
-            serverStartButton.Location = new Point(87, 44);
+            serverStartButton.Location = new Point(86, 19);
             serverStartButton.Name = "serverStartButton";
             serverStartButton.Size = new Size(75, 23);
             serverStartButton.TabIndex = 6;
@@ -57,11 +57,11 @@
             // serverLog
             // 
             serverLog.AutoSize = true;
-            serverLog.Location = new Point(191, 48);
+            serverLog.Location = new Point(33, 64);
             serverLog.Name = "serverLog";
             serverLog.Size = new Size(27, 15);
             serverLog.TabIndex = 7;
-            serverLog.Text = "Log";
+            serverLog.Text = "...";
             // 
             // ipLabel
             // 
@@ -77,7 +77,7 @@
             ipList.AutoSize = true;
             ipList.Location = new Point(70, 100);
             ipList.Name = "ipList";
-            ipList.Size = new Size(17, 15);
+            ipList.Size = new Size(40, 15);
             ipList.TabIndex = 11;
             ipList.Text = "0.0.0.0";
             // 
@@ -85,14 +85,14 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(342, 160);
             Controls.Add(ipList);
             Controls.Add(ipLabel);
             Controls.Add(serverLog);
             Controls.Add(serverStartButton);
             Controls.Add(serverLabel);
             Name = "Form1";
-            Text = "Form1";
+            Text = "Smart Mouse";
             Load += Form1_Load;
             ResumeLayout(false);
             PerformLayout();
