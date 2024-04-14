@@ -125,6 +125,10 @@ namespace SmartMouse
             {
                 Form1.updateLog("Connection ...");
             }
+            else if (commands[0] == "disconnect")
+            {
+                Form1.updateLog("Disconnected ... Waiting for a connection");
+            }
             else if(commands[0] == "move")
             {
                 int inputX, inputY;
