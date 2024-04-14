@@ -26,6 +26,11 @@ namespace SmartMouse
             Server.Start();
         }
 
+        private void stopButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
         public static void updateLog(string newLogText)
         {
             if (instance != null)
