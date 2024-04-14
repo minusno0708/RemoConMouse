@@ -111,8 +111,15 @@ namespace SmartMouse
 
             foreach (string ip in ipList)
             {
-                SendTcp(ip, "");
-                SendUdp(ip, "");
+                try
+                {
+                    SendTcp(ip, "");
+                    SendUdp(ip, "");
+                }
+                catch
+                {
+
+                }
             }
         }
 
