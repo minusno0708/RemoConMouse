@@ -50,7 +50,6 @@ namespace SmartMouse
                     while (isRunning)
                     {
                         string tcpData = await TcpListenerAsync(tcpSocket);
-                        Form1.updateLog($"TCP Received Message is {tcpData}");
                         CallController(tcpData);
                     }
                 });
@@ -59,7 +58,6 @@ namespace SmartMouse
                     while (isRunning)
                     {
                         string udpData = await UdpListenerAsync(udpSocket);
-                        Form1.updateLog($"UDP Received Message is {udpData}");
                         CallController(udpData);
                     }
                 });
@@ -123,7 +121,11 @@ namespace SmartMouse
             message = message.Replace("\n", "").Replace("\0", "");
             string[] commands = message.Split(",");
 
-            if (commands[0] == "move")
+            if (commands[0] == "connect")
+            {
+                Form1.updateLog("Connection ...");
+            }
+            else if(commands[0] == "move")
             {
                 int inputX, inputY;
                 try
