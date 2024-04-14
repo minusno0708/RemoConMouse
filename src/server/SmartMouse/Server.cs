@@ -9,6 +9,8 @@ namespace SmartMouse
     {
         private static int port = 11000;
 
+        private static bool isRunning = false;
+
         public static string getIP()
         {
             string result = "";
@@ -35,12 +37,14 @@ namespace SmartMouse
 
             Form1.updateLog($"Server has started on {port} Waiting for a connection");
 
+            isRunning = true;
+
             try
             {
                 tcpSocket.Listen(1);
                 Task tcpTask = Task.Run(async () =>
                 {
-                    while (true)
+                    while (isRunning)
                     {
                         string tcpData = await TcpListenerAsync(tcpSocket);
                         Form1.updateLog($"TCP Received Message is {tcpData}");
@@ -49,7 +53,7 @@ namespace SmartMouse
                 });
                 Task udpTask = Task.Run(async () =>
                 {
-                    while (true)
+                    while (isRunning)
                     {
                         string udpData = await UdpListenerAsync(udpSocket);
                         Form1.updateLog($"UDP Received Message is {udpData}");
@@ -68,8 +72,8 @@ namespace SmartMouse
             {
                 tcpSocket.Close();
                 udpSocket.Close();
+                Form1.updateLog($"Server is Stopping");
             }
-            
         }
 
         private static async Task<string> TcpListenerAsync(Socket socket)
@@ -95,6 +99,13 @@ namespace SmartMouse
             string data = Encoding.UTF8.GetString(buffer);
 
             return data;
+        }
+
+        public static void Stop()
+        {
+            isRunning = false;
+            SendTcp("192.168.11.64", "stop");
+            SendUdp("192.168.11.64", "stop");
         }
 
         private static void CallController(string message)

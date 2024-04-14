@@ -28,7 +28,7 @@ namespace SmartMouse
 
         private void stopButton_Click(object sender, EventArgs e)
         {
-
+            Server.Stop();
         }
 
         public static void updateLog(string newLogText)
