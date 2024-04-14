@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "SmartMouse"
+rootProject.name = "RemoConMouse"
 include(":app")
  

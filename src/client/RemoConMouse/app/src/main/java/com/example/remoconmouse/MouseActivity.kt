@@ -1,4 +1,4 @@
-package com.example.smartmouse
+package com.example.remoconmouse
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -7,7 +7,7 @@ import android.hardware.SensorManager
 import android.os.Bundle
 import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
-import com.example.smartmouse.databinding.ActivityMouseBinding
+import com.example.remoconmouse.databinding.ActivityMouseBinding
 import java.util.Timer
 import kotlin.concurrent.schedule
 

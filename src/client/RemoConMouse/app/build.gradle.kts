@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.smartmouse"
+    namespace = "com.example.remoconmouse"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.smartmouse"
+        applicationId = "com.example.remoconmouse"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

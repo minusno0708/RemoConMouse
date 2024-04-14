@@ -1,4 +1,4 @@
-package com.example.smartmouse
+package com.example.remoconmouse
 
 import android.hardware.Sensor
 import android.hardware.SensorEvent

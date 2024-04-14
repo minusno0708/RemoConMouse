@@ -1,4 +1,4 @@
-package com.example.smartmouse
+package com.example.remoconmouse
 
 import org.junit.Test
 

@@ -1,10 +1,10 @@
-package com.example.smartmouse
+package com.example.remoconmouse
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.smartmouse.databinding.ActivityMainBinding
+import com.example.remoconmouse.databinding.ActivityMainBinding
 
 object ServerData {
     val serverManager = ServerManager()

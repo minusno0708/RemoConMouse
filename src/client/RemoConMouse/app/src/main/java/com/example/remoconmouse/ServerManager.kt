@@ -1,4 +1,4 @@
-package com.example.smartmouse
+package com.example.remoconmouse
 
 import java.io.BufferedReader
 import java.io.InputStreamReader
