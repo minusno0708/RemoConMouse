@@ -33,6 +33,7 @@
             serverLog = new Label();
             ipLabel = new Label();
             ipList = new Label();
+            serverStopButton = new Button();
             SuspendLayout();
             // 
             // serverLabel
@@ -52,14 +53,24 @@
             serverStartButton.TabIndex = 6;
             serverStartButton.Text = "Start";
             serverStartButton.UseVisualStyleBackColor = true;
-            serverStartButton.Click += button2_Click;
+            serverStartButton.Click += startButton_Click;
+            // 
+            // serverStopButton
+            // 
+            serverStopButton.Location = new Point(167, 19);
+            serverStopButton.Name = "serverStopButton";
+            serverStopButton.Size = new Size(75, 23);
+            serverStopButton.TabIndex = 12;
+            serverStopButton.Text = "Stop";
+            serverStopButton.UseVisualStyleBackColor = true;
+            serverStopButton.Click += stopButton_Click;
             // 
             // serverLog
             // 
             serverLog.AutoSize = true;
             serverLog.Location = new Point(33, 64);
             serverLog.Name = "serverLog";
-            serverLog.Size = new Size(27, 15);
+            serverLog.Size = new Size(16, 15);
             serverLog.TabIndex = 7;
             serverLog.Text = "...";
             // 
@@ -86,6 +97,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(342, 160);
+            Controls.Add(serverStopButton);
             Controls.Add(ipList);
             Controls.Add(ipLabel);
             Controls.Add(serverLog);
@@ -104,5 +116,6 @@
         private Label serverLog;
         private Label ipLabel;
         private Label ipList;
+        private Button serverStopButton;
     }
 }

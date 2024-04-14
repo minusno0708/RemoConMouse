@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.IO.Compression;
 
 namespace SmartMouse
 {
@@ -12,7 +13,15 @@ namespace SmartMouse
             instance = this;
             if (instance != null)
             {
-                instance.ipList.Text = Server.getIP();
+                string[] ipList = Server.getIP();
+
+                string ipStr = "";
+                foreach (string ip in ipList)
+                {
+                    ipStr += ip + "\n";
+                }
+
+                instance.ipList.Text = ipStr;
             }
         }
 
@@ -21,9 +30,14 @@ namespace SmartMouse
 
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void startButton_Click(object sender, EventArgs e)
         {
             Server.Start();
+        }
+
+        private void stopButton_Click(object sender, EventArgs e)
+        {
+            Server.Stop();
         }
 
         public static void updateLog(string newLogText)
