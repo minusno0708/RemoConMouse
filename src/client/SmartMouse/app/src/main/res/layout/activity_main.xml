@@ -7,11 +7,27 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/name"
+    <Button
+        android:id="@+id/toMouse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Smart Mouse"
+        android:text="Connect"
+        android:backgroundTint="@color/button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputIp" />
+
+    <EditText
+        android:id="@+id/inputIp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:ems="6"
+        android:gravity="center_horizontal"
+        android:hint="接続先のIPを入力してください"
+        android:inputType="text"
+        android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,38 +35,16 @@
 
     <TextView
         android:id="@+id/logMessage"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="log"
-        app:layout_constraintBottom_toBottomOf="@+id/name"
+        android:gravity="center_horizontal"
+        android:text="Smart Mouse"
+        android:textSize="40dp"
+        android:background="@color/title"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/inputIp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/toMouse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Connect"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/name" />
-
-    <EditText
-        android:id="@+id/inputIp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:layout_marginBottom="19dp"
-        android:ems="10"
-        android:inputType="text"
-        android:text="192.168.11.64"
-        android:hint="接続先のIPを入力してください"
-        app:layout_constraintBottom_toTopOf="@+id/toMouse"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/name" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

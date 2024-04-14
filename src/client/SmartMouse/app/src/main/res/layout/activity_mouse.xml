@@ -11,79 +11,95 @@
         android:id="@+id/toHome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Home"
-        app:layout_constraintBottom_toTopOf="@+id/logMessage"
+        android:text="Reconnect"
+        android:backgroundTint="@color/button"
+        app:layout_constraintBottom_toTopOf="@+id/mouseSwitch"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.8" />
 
     <TextView
         android:id="@+id/logMessage"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="log"
-        app:layout_constraintBottom_toBottomOf="@id/mouseSwitch"
+        android:gravity="center_horizontal"
+        android:textSize="30dp"
+        android:background="@color/title"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/toHome"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
+    <ToggleButton
         android:id="@+id/mouseSwitch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="250dp"
+        android:layout_height="150dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/switch_button"
+        android:textOff="@null"
+        android:textOn="@null"
+        app:layout_constraintBottom_toTopOf="@+id/scrollUp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/leftClick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="130dp"
+        android:layout_height="200dp"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/click_button"
         android:text="Left"
+        app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/middleClick"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mouseSwitch" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/rightClick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="130dp"
+        android:layout_height="200dp"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/click_button"
         android:text="Right"
+        app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/middleClick"
-        app:layout_constraintTop_toBottomOf="@+id/mouseSwitch" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/middleClick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/click_button"
         android:text="Middle"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toTopOf="@+id/scrollDown"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mouseSwitch" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/scrollUp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/click_button"
         android:text="↑"
-        app:layout_constraintBottom_toBottomOf="@+id/middleClick"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toTopOf="@+id/middleClick"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mouseSwitch" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/scrollDown"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/click_button"
         android:text="↓"
+        app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/middleClick" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
