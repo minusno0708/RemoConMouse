@@ -11,18 +11,19 @@ namespace SmartMouse
 
         private static bool isRunning = false;
 
-        public static string getIP()
+        public static string[] getIP()
         {
-            string result = "";
             string hostname = Dns.GetHostName();
             IPAddress[] adrList = Dns.GetHostAddresses(hostname);
+
+            var adrStrList = new List<string>();
             foreach (IPAddress address in adrList)
             {
                 if (address.AddressFamily == AddressFamily.InterNetwork)
-                    result += address.ToString() + "\n";
+                    adrStrList.Add(address.ToString());
             }
 
-            return result;
+            return adrStrList.ToArray();
         }
 
         public static async void Start()
@@ -107,8 +108,14 @@ namespace SmartMouse
         {
             if (!isRunning) return;
             isRunning = false;
-            SendTcp("192.168.11.64", "stop");
-            SendUdp("192.168.11.64", "stop");
+
+            string[] ipList = getIP();
+
+            foreach (string ip in ipList)
+            {
+                SendTcp(ip, "");
+                SendUdp(ip, "");
+            }
         }
 
         private static void CallController(string message)
