@@ -25,7 +25,7 @@ class ServerManager {
         var message = ""
 
         Thread {
-            sendTcp("tcp connection")
+            sendTcp("connect")
             message = waitTcp()
         }.start()
 
