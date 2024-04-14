@@ -11,7 +11,7 @@
         android:id="@+id/toHome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Reconnect"
+        android:text="Disconnect"
         android:backgroundTint="@color/button"
         app:layout_constraintBottom_toTopOf="@+id/mouseSwitch"
         app:layout_constraintEnd_toEndOf="parent"

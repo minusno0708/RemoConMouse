@@ -126,6 +126,9 @@ class MouseActivity : AppCompatActivity() {
         if (isMouseOn) {
             mouseDisable()
         }
+
+        serverManager.sendTcp("disconnect")
+
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
     }
