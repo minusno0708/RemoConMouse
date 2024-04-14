@@ -52,7 +52,7 @@
             serverStartButton.TabIndex = 6;
             serverStartButton.Text = "Start";
             serverStartButton.UseVisualStyleBackColor = true;
-            serverStartButton.Click += button2_Click;
+            serverStartButton.Click += startButton_Click;
             // 
             // serverLog
             // 

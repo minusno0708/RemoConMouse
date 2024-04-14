@@ -21,7 +21,7 @@ namespace SmartMouse
 
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void startButton_Click(object sender, EventArgs e)
         {
             Server.Start();
         }
