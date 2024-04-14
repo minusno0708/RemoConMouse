@@ -27,6 +27,8 @@ namespace SmartMouse
 
         public static async void Start()
         {
+            if (isRunning) return;
+
             var tcpSocket = new Socket(SocketType.Stream, ProtocolType.Tcp);
             var tcpLocal = new IPEndPoint(IPAddress.Any, port);
             tcpSocket.Bind(tcpLocal);
@@ -103,6 +105,7 @@ namespace SmartMouse
 
         public static void Stop()
         {
+            if (!isRunning) return;
             isRunning = false;
             SendTcp("192.168.11.64", "stop");
             SendUdp("192.168.11.64", "stop");
