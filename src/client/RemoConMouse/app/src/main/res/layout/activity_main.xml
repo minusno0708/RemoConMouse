@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="Smart Mouse"
+        android:text="RemoConMouse"
         android:textSize="40dp"
         android:background="@color/title"
         android:textColor="@color/white"

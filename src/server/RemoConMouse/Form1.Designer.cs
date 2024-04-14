@@ -104,7 +104,7 @@
             Controls.Add(serverStartButton);
             Controls.Add(serverLabel);
             Name = "Form1";
-            Text = "Smart Mouse";
+            Text = "RemoConMouse";
             Load += Form1_Load;
             ResumeLayout(false);
             PerformLayout();
