@@ -1,0 +1,20 @@
+name: RemoConMouse Client Build
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-client:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Change directory
+        run: cd src/client/RemoConMouse
+
+      - name: Setup JDK 19
+        uses: actions/setup-java@v3
+        with:
+          java-version: '19'
+          distribution: 'zulu'
