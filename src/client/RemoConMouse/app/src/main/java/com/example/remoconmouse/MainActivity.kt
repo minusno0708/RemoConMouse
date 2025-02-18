@@ -5,30 +5,15 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import com.example.remoconmouse.databinding.ActivityMainBinding
+import com.example.remoconmouse.ui.MainScreen
 
 import androidx.activity.compose.setContent
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 
 object ServerData {
     val serverManager = ServerManager()
 }
 
 class MainActivity : ComponentActivity() {
-    private lateinit var binding: ActivityMainBinding
-
     private val serverManager = ServerData.serverManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,49 +45,6 @@ class MainActivity : ComponentActivity() {
 
         return parsedIP.all { section ->
             section.toIntOrNull()?.let { it in 0..255 } ?: false
-        }
-    }
-}
-
-@Composable
-fun MainScreen(onConnect: (String) -> Unit) {
-    var ipAddress by remember { mutableStateOf("") }
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(
-            text = "RemoConMouse",
-            fontSize = 40.sp,
-            color = Color.White,
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Color.Blue)
-                .padding(16.dp)
-        )
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        OutlinedTextField(
-            value = ipAddress,
-            onValueChange = { ipAddress = it },
-            label = { Text("接続先のIPを入力してください") },
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        Button(
-            onClick = { onConnect(ipAddress) },
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Green)
-        ) {
-            Text("Connect", fontSize = 20.sp)
         }
     }
 }
