@@ -6,10 +6,14 @@ import android.content.Intent
 import android.hardware.SensorManager
 import android.os.Bundle
 import android.view.MotionEvent
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import com.example.remoconmouse.databinding.ActivityMouseBinding
+import com.example.remoconmouse.ui.MainScreen
 import java.util.Timer
 import kotlin.concurrent.schedule
+
+import com.example.remoconmouse.ui.MouseScreen
 
 class MouseActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMouseBinding
@@ -32,83 +36,9 @@ class MouseActivity : AppCompatActivity() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMouseBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
-        binding.toHome.setOnClickListener {
-            toHome()
-        }
-        binding.mouseSwitch.setOnClickListener {
-            switchMouseOnOf()
-        }
 
-        binding.leftClick.setOnTouchListener { _, event ->
-            when (event.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    mouseClick("left-down")
-                    true
-                }
-                MotionEvent.ACTION_UP -> {
-                    mouseClick("left-up")
-                    true
-                }
-                else -> false
-            }
-        }
-        binding.rightClick.setOnTouchListener { _, event ->
-            when (event.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    mouseClick("right-down")
-                    true
-                }
-                MotionEvent.ACTION_UP -> {
-                    mouseClick("right-up")
-                    true
-                }
-                else -> false
-            }
-        }
-        binding.middleClick.setOnTouchListener { _, event ->
-            when (event.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    mouseClick("middle-down")
-                    true
-                }
-
-                MotionEvent.ACTION_UP -> {
-                    mouseClick("middle-up")
-                    true
-                }
-
-                else -> false
-            }
-        }
-
-        binding.scrollUp.setOnTouchListener { _, event ->
-            when (event.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    onMouseScroll("up")
-                    true
-                }
-                MotionEvent.ACTION_UP -> {
-                    offMouseScroll()
-                    true
-                }
-                else -> false
-            }
-        }
-        binding.scrollDown.setOnTouchListener { _, event ->
-            when (event.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    onMouseScroll("down")
-                    true
-                }
-                MotionEvent.ACTION_UP -> {
-                    offMouseScroll()
-                    true
-                }
-                else -> false
-            }
+        setContent {
+            MouseScreen()
         }
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
@@ -118,11 +48,9 @@ class MouseActivity : AppCompatActivity() {
 
         accelerometerListener = AccelerometerListener()
         accelerometerManager = AccelerometerManager(sensorManager, accelerometerListener)
-
-        updateLog(serverManager.get())
     }
 
-    private fun toHome() {
+    fun toHome() {
         if (isMouseOn) {
             mouseDisable()
         }
@@ -135,7 +63,7 @@ class MouseActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun switchMouseOnOf() {
+    fun switchMouseOnOf() {
         isMouseOn = if (!isMouseOn) {
             mouseEnable()
             true
@@ -161,7 +89,7 @@ class MouseActivity : AppCompatActivity() {
         moveTimer.cancel()
     }
 
-    private fun mouseClick(type: String) {
+    fun mouseClick(type: String) {
         val command = "click,$type"
 
         Thread {
@@ -169,7 +97,7 @@ class MouseActivity : AppCompatActivity() {
         }.start()
     }
 
-    private fun onMouseScroll(type: String) {
+    fun onMouseScroll(type: String) {
         try {
             scrollTimer.cancel()
         } catch (_: Exception) {
@@ -182,17 +110,13 @@ class MouseActivity : AppCompatActivity() {
 
         scrollTimer.schedule(0, 100) {
             Thread {
-                serverManager.sendUdp(command)
+                serverManager.sendTcp(command)
             }.start()
         }
     }
 
-    private fun offMouseScroll() {
+    fun offMouseScroll() {
         scrollTimer.cancel()
-    }
-
-    private fun updateLog(message: String) {
-        binding.logMessage.text = message
     }
 
     inner class GyroscopeListener: GyroscopeManager.GyroscopeListener {
