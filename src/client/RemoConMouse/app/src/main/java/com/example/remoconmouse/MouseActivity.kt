@@ -5,15 +5,13 @@ import android.content.Context
 import android.content.Intent
 import android.hardware.SensorManager
 import android.os.Bundle
-import android.view.MotionEvent
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import com.example.remoconmouse.databinding.ActivityMouseBinding
-import com.example.remoconmouse.ui.MainScreen
 import java.util.Timer
 import kotlin.concurrent.schedule
 
-import com.example.remoconmouse.ui.MouseScreen
+import com.example.remoconmouse.ui.screens.MouseScreen
 
 class MouseActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMouseBinding

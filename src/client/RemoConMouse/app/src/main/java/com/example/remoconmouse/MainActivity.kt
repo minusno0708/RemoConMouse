@@ -4,8 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
-import com.example.remoconmouse.databinding.ActivityMainBinding
-import com.example.remoconmouse.ui.MainScreen
+import com.example.remoconmouse.ui.screens.MainScreen
 
 import androidx.activity.compose.setContent
 
