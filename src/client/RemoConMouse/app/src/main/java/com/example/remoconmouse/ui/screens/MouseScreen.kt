@@ -31,16 +31,18 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 
-import com.example.remoconmouse.MouseActivity
 import com.example.remoconmouse.ui.components.HeaderComponents
 import com.example.remoconmouse.ui.components.MouseComponents
+import com.example.remoconmouse.viewmodel.MouseViewModel
 
 @Preview
 @Composable
-fun MouseScreen() {
-    val context = LocalContext.current
-    val activity = requireNotNull(context as? MouseActivity)
+fun MouseScreen(
+    onNavigateHome: () -> Unit,
+    viewModel: MouseViewModel = viewModel()
+) {
 
     Column(
         modifier = Modifier
@@ -54,7 +56,10 @@ fun MouseScreen() {
         Spacer(modifier = Modifier.height(20.dp))
 
         Button(
-            onClick = { activity.toHome() },
+            onClick = {
+                viewModel.disconnect()
+                onNavigateHome()
+            },
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.DarkGray)
         ) {
             Text("Disconnect", fontSize = 20.sp)
@@ -65,7 +70,7 @@ fun MouseScreen() {
         var isEnabled by remember { mutableStateOf(false) }
         Button(
             onClick = {
-                activity.switchMouseOnOf()
+                viewModel.toggleMouseEnable()
                 isEnabled = !isEnabled
             },
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.Green)
@@ -77,7 +82,7 @@ fun MouseScreen() {
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        MouseComponents(activity)
+        MouseComponents(viewModel)
     }
 }
 

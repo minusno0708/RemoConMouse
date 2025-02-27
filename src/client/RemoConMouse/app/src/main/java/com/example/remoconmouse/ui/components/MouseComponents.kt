@@ -19,10 +19,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
-import com.example.remoconmouse.MouseActivity
+import com.example.remoconmouse.viewmodel.MouseViewModel
 
 @Composable
-fun MouseComponents(activity: MouseActivity) {
+fun MouseComponents(viewModel: MouseViewModel) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -38,8 +38,8 @@ fun MouseComponents(activity: MouseActivity) {
         ) {
             ClickButton(
                 modifier = Modifier.weight(1f),
-                onPush = { activity.mouseClick("left-down") },
-                onRemove = { activity.mouseClick("left-up") }
+                onPush = { viewModel.mouseClick("left-down") },
+                onRemove = { viewModel.mouseClick("left-up") }
             )
 
             Column(
@@ -50,25 +50,25 @@ fun MouseComponents(activity: MouseActivity) {
             ) {
                 WheelButton(
                     modifier = Modifier.weight(1f),
-                    onPush = { activity.onMouseScroll("up") },
-                    onRemove = { activity.offMouseScroll() }
+                    onPush = { viewModel.onMouseScroll("up") },
+                    onRemove = { viewModel.offMouseScroll() }
                 )
                 WheelButton(
                     modifier = Modifier.weight(1f),
-                    onPush = { activity.mouseClick("middle-down") },
-                    onRemove = { activity.mouseClick("middle-up") }
+                    onPush = { viewModel.mouseClick("middle-down") },
+                    onRemove = { viewModel.mouseClick("middle-up") }
                 )
                 WheelButton(
                     modifier = Modifier.weight(1f),
-                    onPush = { activity.onMouseScroll("down") },
-                    onRemove = { activity.offMouseScroll() }
+                    onPush = { viewModel.onMouseScroll("down") },
+                    onRemove = { viewModel.offMouseScroll() }
                 )
             }
 
             ClickButton(
                 modifier = Modifier.weight(1f),
-                onPush = { activity.mouseClick("right-down") },
-                onRemove = { activity.mouseClick("right-up") }
+                onPush = { viewModel.mouseClick("right-down") },
+                onRemove = { viewModel.mouseClick("right-up") }
             )
         }
     }

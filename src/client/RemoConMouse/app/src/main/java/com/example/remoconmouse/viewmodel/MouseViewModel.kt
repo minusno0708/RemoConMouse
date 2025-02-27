@@ -1,26 +1,31 @@
-package com.example.remoconmouse
+package com.example.remoconmouse.viewmodel
 
-import android.annotation.SuppressLint
+import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.hardware.SensorManager
-import android.os.Bundle
-import androidx.activity.compose.setContent
-import androidx.appcompat.app.AppCompatActivity
-import com.example.remoconmouse.databinding.ActivityMouseBinding
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
+import com.example.remoconmouse.AccelerometerManager
+import com.example.remoconmouse.GyroscopeManager
+import com.example.remoconmouse.ServerData
+import com.example.remoconmouse.ServerManager
+import com.example.remoconmouse.utils.NetworkUtils
+
 import java.util.Timer
 import kotlin.concurrent.schedule
 
-import com.example.remoconmouse.ui.screens.MouseScreen
+class MouseViewModel(application: Application) : AndroidViewModel(application) {
+    private val sensorManager = application.getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
-class MouseActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMouseBinding
+    private var gyroscopeListener = GyroscopeListener()
+    private var accelerometerListener = AccelerometerListener()
 
-    private lateinit var sensorManager: SensorManager
-    private lateinit var gyroscopeManager: GyroscopeManager
-    private lateinit var gyroscopeListener: MouseActivity.GyroscopeListener
-    private lateinit var accelerometerManager: AccelerometerManager
-    private lateinit var accelerometerListener: MouseActivity.AccelerometerListener
+    private var gyroscopeManager = GyroscopeManager(sensorManager, gyroscopeListener)
+    private var accelerometerManager = AccelerometerManager(sensorManager, accelerometerListener)
 
     private val serverManager = ServerData.serverManager
     private var moveTimer = Timer()
@@ -29,27 +34,16 @@ class MouseActivity : AppCompatActivity() {
     private var gyroValues: FloatArray = floatArrayOf(0f, 0f, 0f)
     private var accValues: FloatArray = floatArrayOf(0f, 0f, 0f)
 
-    private var isMouseOn = false
+    private var isMouseEnable = false
 
-    @SuppressLint("ClickableViewAccessibility")
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    var isConnected = false
 
-        setContent {
-            MouseScreen()
-        }
-
-        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
-
-        gyroscopeListener = GyroscopeListener()
-        gyroscopeManager = GyroscopeManager(sensorManager, gyroscopeListener)
-
-        accelerometerListener = AccelerometerListener()
-        accelerometerManager = AccelerometerManager(sensorManager, accelerometerListener)
+    fun connect(ip: String) {
+        isConnected = if (NetworkUtils.isIP(ip)) serverManager.connect(ip, 11000) else false
     }
 
-    fun toHome() {
-        if (isMouseOn) {
+    fun disconnect() {
+        if (isMouseEnable) {
             mouseDisable()
         }
 
@@ -57,12 +51,11 @@ class MouseActivity : AppCompatActivity() {
             serverManager.sendTcp("disconnect")
         }.start()
 
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
+        isConnected = false
     }
 
-    fun switchMouseOnOf() {
-        isMouseOn = if (!isMouseOn) {
+    fun toggleMouseEnable() {
+        isMouseEnable = if (!isMouseEnable) {
             mouseEnable()
             true
         } else {
@@ -72,6 +65,7 @@ class MouseActivity : AppCompatActivity() {
     }
 
     private fun mouseEnable() {
+        registerSensors()
         moveTimer = Timer()
         moveTimer.schedule(0, 100) {
             val moveX: Int = (-gyroValues[2]*100).toInt()
@@ -84,6 +78,7 @@ class MouseActivity : AppCompatActivity() {
     }
 
     private fun mouseDisable() {
+        unregisterSensors()
         moveTimer.cancel()
     }
 
@@ -117,6 +112,16 @@ class MouseActivity : AppCompatActivity() {
         scrollTimer.cancel()
     }
 
+    private fun registerSensors() {
+        gyroscopeManager.registerListener()
+        accelerometerManager.registerListener()
+    }
+
+    private fun unregisterSensors() {
+        gyroscopeManager.unregisterListener()
+        accelerometerManager.unregisterListener()
+    }
+
     inner class GyroscopeListener: GyroscopeManager.GyroscopeListener {
         override fun onValueChanged(x: Float, y: Float, z: Float) {
             gyroValues = floatArrayOf(x, y, z)
@@ -127,17 +132,5 @@ class MouseActivity : AppCompatActivity() {
         override fun onValueChanged(x: Float, y: Float, z: Float) {
             accValues = floatArrayOf(x, y, z)
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        gyroscopeManager.registerListener()
-        accelerometerManager.registerListener()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        gyroscopeManager.unregisterListener()
-        accelerometerManager.unregisterListener()
     }
 }
