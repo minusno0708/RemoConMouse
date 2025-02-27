@@ -9,8 +9,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
-import com.example.remoconmouse.AccelerometerManager
-import com.example.remoconmouse.GyroscopeManager
+import com.example.remoconmouse.data.GyroscopeRepository
+import com.example.remoconmouse.data.AccelerometerRepository
 import com.example.remoconmouse.ServerData
 import com.example.remoconmouse.ServerManager
 import com.example.remoconmouse.utils.NetworkUtils
@@ -21,18 +21,12 @@ import kotlin.concurrent.schedule
 class MouseViewModel(application: Application) : AndroidViewModel(application) {
     private val sensorManager = application.getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
-    private var gyroscopeListener = GyroscopeListener()
-    private var accelerometerListener = AccelerometerListener()
-
-    private var gyroscopeManager = GyroscopeManager(sensorManager, gyroscopeListener)
-    private var accelerometerManager = AccelerometerManager(sensorManager, accelerometerListener)
+    private var gyroscopeRepository = GyroscopeRepository(sensorManager)
+    private var accelerometerRepository = AccelerometerRepository(sensorManager)
 
     private val serverManager = ServerData.serverManager
     private var moveTimer = Timer()
     private var scrollTimer = Timer()
-
-    private var gyroValues: FloatArray = floatArrayOf(0f, 0f, 0f)
-    private var accValues: FloatArray = floatArrayOf(0f, 0f, 0f)
 
     private var isMouseEnable = false
 
@@ -68,8 +62,8 @@ class MouseViewModel(application: Application) : AndroidViewModel(application) {
         registerSensors()
         moveTimer = Timer()
         moveTimer.schedule(0, 100) {
-            val moveX: Int = (-gyroValues[2]*100).toInt()
-            val moveY: Int = (-gyroValues[0]*100).toInt()
+            val moveX: Int = (-gyroscopeRepository.values[2]*100).toInt()
+            val moveY: Int = (-gyroscopeRepository.values[0]*100).toInt()
 
             Thread {
                 serverManager.sendUdp("move,${moveX},${moveY}")
@@ -113,24 +107,12 @@ class MouseViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun registerSensors() {
-        gyroscopeManager.registerListener()
-        accelerometerManager.registerListener()
+        gyroscopeRepository.registerListener()
+        accelerometerRepository.registerListener()
     }
 
     private fun unregisterSensors() {
-        gyroscopeManager.unregisterListener()
-        accelerometerManager.unregisterListener()
-    }
-
-    inner class GyroscopeListener: GyroscopeManager.GyroscopeListener {
-        override fun onValueChanged(x: Float, y: Float, z: Float) {
-            gyroValues = floatArrayOf(x, y, z)
-        }
-    }
-
-    inner class AccelerometerListener: AccelerometerManager.AccelerometerListener {
-        override fun onValueChanged(x: Float, y: Float, z: Float) {
-            accValues = floatArrayOf(x, y, z)
-        }
+        gyroscopeRepository.unregisterListener()
+        accelerometerRepository.unregisterListener()
     }
 }
