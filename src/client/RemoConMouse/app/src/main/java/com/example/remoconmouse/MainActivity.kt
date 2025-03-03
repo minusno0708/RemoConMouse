@@ -11,9 +11,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.remoconmouse.ui.screens.HomeScreen
 import com.example.remoconmouse.ui.screens.MouseScreen
+import com.example.remoconmouse.data.NetworkRepository
 
 object ServerData {
-    val serverManager = ServerManager()
+    val serverManager = NetworkRepository()
 }
 
 class MainActivity : ComponentActivity() {

@@ -1,4 +1,4 @@
-package com.example.remoconmouse
+package com.example.remoconmouse.data
 
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -8,7 +8,7 @@ import java.net.DatagramPacket
 import java.net.DatagramSocket
 import java.net.InetAddress
 
-class ServerManager {
+class NetworkRepository {
     private var ip: String = ""
     private var port: Int = 0
     private var senderPort: Int = 0
