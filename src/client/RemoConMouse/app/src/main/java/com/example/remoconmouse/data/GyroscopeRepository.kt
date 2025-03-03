@@ -4,7 +4,6 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import com.example.remoconmouse.viewmodel.MouseViewModel
 
 class GyroscopeRepository(private val sensorManager: SensorManager) : SensorEventListener {
     private var gyroscopeSensor: Sensor? = null

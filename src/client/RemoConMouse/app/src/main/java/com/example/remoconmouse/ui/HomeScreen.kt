@@ -1,4 +1,4 @@
-package com.example.remoconmouse.ui.screens
+package com.example.remoconmouse.ui
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
@@ -28,7 +28,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.remoconmouse.ui.components.HeaderComponents
-import com.example.remoconmouse.viewmodel.MouseViewModel
 
 @Preview
 @Composable

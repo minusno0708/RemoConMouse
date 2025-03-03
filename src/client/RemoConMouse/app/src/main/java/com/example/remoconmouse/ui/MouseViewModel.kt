@@ -1,18 +1,12 @@
-package com.example.remoconmouse.viewmodel
+package com.example.remoconmouse.ui
 
 import android.app.Application
 import android.content.Context
-import android.content.Intent
 import android.hardware.SensorManager
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
 import com.example.remoconmouse.data.GyroscopeRepository
 import com.example.remoconmouse.data.AccelerometerRepository
 import com.example.remoconmouse.ServerData
-import com.example.remoconmouse.ServerManager
 import com.example.remoconmouse.utils.NetworkUtils
 
 import java.util.Timer

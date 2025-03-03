@@ -1,16 +1,14 @@
 package com.example.remoconmouse
 
-import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 
 import androidx.activity.compose.setContent
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.remoconmouse.ui.screens.HomeScreen
-import com.example.remoconmouse.ui.screens.MouseScreen
+import com.example.remoconmouse.ui.HomeScreen
+import com.example.remoconmouse.ui.MouseScreen
 import com.example.remoconmouse.data.NetworkRepository
 
 object ServerData {
