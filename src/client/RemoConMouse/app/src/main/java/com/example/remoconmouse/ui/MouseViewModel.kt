@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel
 import com.example.remoconmouse.data.GyroscopeRepository
 import com.example.remoconmouse.data.AccelerometerRepository
 import com.example.remoconmouse.ServerData
+import com.example.remoconmouse.utils.MouseActionUtils
 import com.example.remoconmouse.utils.NetworkUtils
 
 import java.util.Timer
@@ -36,7 +37,7 @@ class MouseViewModel(application: Application) : AndroidViewModel(application) {
         }
 
         Thread {
-            serverManager.sendTcp("disconnect")
+            serverManager.sendTcp(MouseActionUtils.disconnect())
         }.start()
 
         isConnected = false
@@ -60,7 +61,7 @@ class MouseViewModel(application: Application) : AndroidViewModel(application) {
             val moveY: Int = (-gyroscopeRepository.values[0]*100).toInt()
 
             Thread {
-                serverManager.sendUdp("move,${moveX},${moveY}")
+                serverManager.sendUdp(MouseActionUtils.move(moveX, moveY))
             }.start()
         }
     }
@@ -71,10 +72,8 @@ class MouseViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun mouseClick(type: String) {
-        val command = "click,$type"
-
         Thread {
-            serverManager.sendTcp(command)
+            serverManager.sendTcp(MouseActionUtils.click(type))
         }.start()
     }
 
@@ -87,11 +86,9 @@ class MouseViewModel(application: Application) : AndroidViewModel(application) {
 
         scrollTimer = Timer()
 
-        val command = "scroll,$type"
-
         scrollTimer.schedule(0, 100) {
             Thread {
-                serverManager.sendTcp(command)
+                serverManager.sendTcp(MouseActionUtils.scroll(type))
             }.start()
         }
     }

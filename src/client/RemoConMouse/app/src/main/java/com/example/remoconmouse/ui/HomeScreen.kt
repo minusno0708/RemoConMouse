@@ -28,6 +28,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.remoconmouse.ui.components.HeaderComponents
+import com.example.remoconmouse.utils.MouseActionUtils
 
 @Preview
 @Composable
@@ -72,7 +73,7 @@ fun HomeScreen(
             },
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.Green)
         ) {
-            Text("Connect", fontSize = 20.sp)
+            Text(MouseActionUtils.connect(), fontSize = 20.sp)
         }
     }
 }
