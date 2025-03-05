@@ -28,7 +28,7 @@ import com.example.remoconmouse.ui.components.MouseComponents
 @Preview
 @Composable
 fun MouseScreen(
-    onNavigateHome: () -> Unit,
+    onNavigateHome: () -> Unit = {},
     viewModel: MouseViewModel = viewModel()
 ) {
 

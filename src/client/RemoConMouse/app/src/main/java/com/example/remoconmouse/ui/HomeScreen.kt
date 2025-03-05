@@ -33,7 +33,7 @@ import com.example.remoconmouse.utils.MouseActionUtils
 @Preview
 @Composable
 fun HomeScreen(
-    onNavigateMouse: () -> Unit,
+    onNavigateMouse: () -> Unit = {},
     viewModel: MouseViewModel = viewModel()
 ) {
     val context = LocalContext.current
